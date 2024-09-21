@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+mongoose.connect("mongodb://127.0.0.1:27017/products-details");
 
 const productSchema = new mongoose.Schema({
   title: String,
@@ -22,4 +23,4 @@ const productSchema = new mongoose.Schema({
   restoredAt: Date,
 });
 
-export default mongoose.model("Product", productSchema);
+module.exports = mongoose.model("Product", productSchema);
