@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\views",
+    "\\src\\views\\admin\\pages",
+    "\\src\\views\\client",
+    "\\src\\views\\client\\pages",
+    "\\src\\views\\client\\pages\\home",
+    "\\src\\views\\client\\pages\\products"
+  ],
+  "SelectedNode": "\\src\\views\\client\\pages\\home\\index.pug",
+  "PreviewInSolutionExplorer": false
+}
