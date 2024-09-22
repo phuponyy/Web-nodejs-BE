@@ -4,8 +4,11 @@ const app = express();
 const path = require("path");
 require("dotenv").config();
 
-// const Product = require("./src/models/product.model");
+const database = require("./src/config/database");
+
 const route = require("./src/routers/client/index.route");
+
+database.connect();
 
 // NOTE: Config
 app.set("views", path.join(__dirname, "src/views"));

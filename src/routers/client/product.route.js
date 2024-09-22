@@ -1,10 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const productController = require("../../controllers/client/product.controller");
 
-router.get("/", async (req, res) => {
-  res.render("client/pages/products", {
-    titlePage: "Dang Sách Sản Phẩm",
-  });
-});
+router.get("/", productController.index);
 
 module.exports = router;

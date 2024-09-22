@@ -1,3 +1,16 @@
-mixin header(title)
-    div(class="box-head")
-        header(class="inner-title") #{title}
+mixin header()
+    header.header 
+        .container 
+            .row.align-items-center 
+                .col-3 
+                    .inner-logo 
+                        a(href="/")
+                            img(src="/images/PN.png" alt="logo")
+
+                .col-9
+                    .inner-menu
+                        ul
+                            li 
+                                a(href="/") Trang Chủ
+                            li
+                                a(href="/products") Sản phẩm
