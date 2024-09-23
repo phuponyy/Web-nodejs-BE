@@ -2,6 +2,7 @@
 const express = require("express");
 const app = express();
 const methodOverride = require("method-override");
+const bodyParser = require("body-parser");
 const path = require("path");
 require("dotenv").config();
 
@@ -20,6 +21,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //Plugin: method-override
 app.use(methodOverride("_method"));
+
+//Plugin: body-parser
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // NOTE: App Locals Variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
