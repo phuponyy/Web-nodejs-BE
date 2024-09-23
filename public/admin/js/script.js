@@ -37,3 +37,26 @@ if (formSearch) {
   });
 }
 //END: Form Search
+
+//NOTE: Pagination
+const buttonPagination = document.querySelectorAll("[button-pagination]");
+if (buttonPagination) {
+  let url = new URL(window.location.href);
+  buttonPagination.forEach((button) => {
+    button.addEventListener("click", () => {
+      const page = button.getAttribute("button-pagination");
+      const totalPage = button.getAttribute("button-pagTotal");
+
+      // Nếu page là NaN hoặc âm, đặt lại thành 1
+      if (isNaN(page) || page <= 0) {
+        url.searchParams.set("page", 1);
+      } else {
+        // Nếu page lớn hơn totalPage, đặt về totalPage
+        url.searchParams.set("page", Math.min(totalPage, page));
+      }
+
+      window.location.href = url.href;
+    });
+  });
+}
+//END: Pagination

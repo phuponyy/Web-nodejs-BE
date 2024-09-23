@@ -1,6 +1,7 @@
 extends ../../layout/default.pug
 include ../../mixins/fillter-status.pug
 include ../../mixins/search.pug
+include ../../mixins/pagination.pug
 
 block main 
     h1 Danh sách sản phẩm
@@ -11,40 +12,54 @@ block main
                 .row 
                     .col-6
                         +fillter-status(fillterStatus)
-                    .col-6 
-                        +search(keyword)
+                    .col-6.d-flex.justify-content-end
+                        .input-group.w-50
+                            +search(keyword)
 
     .card-mb-3
         .card-header Danh sách
             .card-body
-                table.table.table-hover.table-sm
-                    thead 
-                        tr 
-                            th STT 
-                            th Hình ảnh
-                            th Tiêu đề
-                            th Giá
-                            th Trạng thái
-                            th Hành động
-
-                    tbody
-                        each item, index in products
+                if products.length > 0
+                    table.table.table-hover.table-sm
+                        thead 
                             tr 
-                                td #{index+1}
-                                td 
-                                    img(
-                                        src=item.thumbnail
-                                        alt=item.title
-                                        width="100px"
-                                        height="auto"
-                                    )
-                                td #{item.title}
-                                td #{item.price}$
-                                td
-                                    if(item.status == "active")
-                                        a(href="#" class="badge rounded-pill text-bg-success") Hoạt động
-                                    else
-                                        a(href="#" class="badge rounded-pill text-bg-danger") Dừng hoạt động
-                                td  
-                                    button(class="btn btn-warning btn-sm") Sửa
-                                    button(class="btn btn-danger btn-sm") Xóa
+                                th STT 
+                                th Hình ảnh
+                                th Tiêu đề
+                                th Giá
+                                th Trạng thái
+                                th Hành động
+
+                        tbody
+                            each item, index in products
+                                tr 
+                                    td #{index+1}
+                                    td 
+                                        img(
+                                            src=item.thumbnail
+                                            alt=item.title
+                                            width="100px"
+                                            height="auto"
+                                        )
+                                    td #{item.title}
+                                    td #{item.price}$
+                                    td
+                                        if(item.status == "active")
+                                            a(href="#" class="badge rounded-pill text-bg-success") Hoạt động
+                                        else
+                                            a(href="#" class="badge rounded-pill text-bg-danger") Dừng hoạt động
+                                    td  
+                                        button(class="btn btn-warning btn-sm") Sửa
+                                        button(class="btn btn-danger btn-sm") Xóa
+                else
+                    table.table.table-hover.table-sm
+                        thead 
+                            tr 
+                                th STT 
+                                th Hình ảnh
+                                th Tiêu đề
+                                th Giá
+                                th Trạng thái
+                                th Hành động
+                    h1.text-danger.text-center Không tìm thấy sản phẩm nào!
+    +pagination(pagination)
