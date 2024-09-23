@@ -1,10 +1,7 @@
-module.exports = (
-  objectPagination,
-  query,
-  halfPagesToShow,
-  maxPagesToShow,
-  countProduct
-) => {
+module.exports = (objectPagination, query, countProduct) => {
+  let maxPagesToShow = 5;
+  let halfPagesToShow = Math.floor(maxPagesToShow / 2);
+
   // Tính toán tổng số trang
   const totalPage = Math.ceil(countProduct / objectPagination.limitItems);
   objectPagination.totalPage = totalPage;

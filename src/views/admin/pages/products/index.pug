@@ -45,12 +45,24 @@ block main
                                     td #{item.price}$
                                     td
                                         if(item.status == "active")
-                                            a(href="#" class="badge rounded-pill text-bg-success") Hoạt động
+                                            a(
+                                                href="javascript:;" 
+                                                class="badge rounded-pill text-bg-success"
+                                                button-change-status
+                                                data-status=item.status
+                                                data-id=item.id
+                                                ) Hoạt động
                                         else
-                                            a(href="#" class="badge rounded-pill text-bg-danger") Dừng hoạt động
+                                            a(
+                                                href="javascript:;" 
+                                                class="badge rounded-pill text-bg-danger"
+                                                button-change-status
+                                                data-status=item.status
+                                                data-id=item.id
+                                                ) Dừng hoạt động
                                     td  
                                         button(class="btn btn-warning btn-sm") Sửa
-                                        button(class="btn btn-danger btn-sm") Xóa
+                                        button(class="btn btn-danger btn-sm ms-2") Xóa
                 else
                     table.table.table-hover.table-sm
                         thead 
@@ -63,3 +75,12 @@ block main
                                 th Hành động
                     h1.text-danger.text-center Không tìm thấy sản phẩm nào!
     +pagination(pagination)
+
+    form(
+        action="", 
+        method="POST"
+        id="form-change-status"
+        data-path=`${prefixAdmin}/products/change-status`
+        )
+
+    script(src="/admin/js/product.js")

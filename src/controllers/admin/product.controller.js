@@ -23,9 +23,6 @@ module.exports.index = async (req, res) => {
   //NOTE: Pagination
   const countProduct = await Product.countDocuments(find);
 
-  let maxPagesToShow = 5;
-  let halfPagesToShow = Math.floor(maxPagesToShow / 2);
-
   let objectPagination = paginationHelper(
     {
       limitItems: 7,
@@ -35,8 +32,6 @@ module.exports.index = async (req, res) => {
       endPage: 1,
     },
     req.query,
-    halfPagesToShow,
-    maxPagesToShow,
     countProduct
   );
 
@@ -53,4 +48,14 @@ module.exports.index = async (req, res) => {
     keyword: objectSearch.keyword,
     pagination: objectPagination,
   });
+};
+
+// NOTE: [GET] /admin/change-status/:status/:id
+module.exports.changeStatus = async (req, res) => {
+  const status = req.params.status;
+  const id = req.params.id;
+
+  await Product.updateOne({ _id: id }, { status: status });
+
+  res.redirect("back");
 };
