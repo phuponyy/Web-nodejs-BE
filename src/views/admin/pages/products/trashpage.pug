@@ -78,9 +78,15 @@ block main
                                         button(class="btn btn-warning btn-sm") Sửa
                                         button(
                                             class=`btn ${nameTitle.classBtn} btn-sm ms-2`
-                                            button-delete
+                                            button-restore
                                             data-id=item.id
                                             ) #{nameTitle.restore}
+                                        button(
+                                            class=`btn btn-danger btn-sm ms-2`
+                                            button-delete-f
+                                            data-id=item.id
+                                            ) Xoá vĩnh viễn
+
                 else
                     table.table.table-hover.table-sm
                         thead 
@@ -104,8 +110,15 @@ block main
     form(
         action="", 
         method="POST"
-        id="form-delete-status"
-        data-path=`${prefixAdmin}/products/delete`
+        id="form-restore-status"
+        data-path=`${prefixAdmin}/products/trash/restore`
+        )
+
+    form(
+        action="", 
+        method="POST"
+        id="form-delete-f"
+        data-path=`${prefixAdmin}/products/trash/deletef`
         )
 
     script(src="/admin/js/product.js")

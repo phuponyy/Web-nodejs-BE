@@ -1,8 +1,16 @@
 mixin sider()
-    .sider
+    .sider.d-flex.flex-column.mb-2.justify-content-between
         .inner-menu
-            ul
-                li
+            ul 
+                li.d-flex.align-items-center
+                    i(class="fa-solid fa-house-chimney fs-6")
                     a(href=`${prefixAdmin}/dashboard`) Tổng quan
-                li
+                li.d-flex.align-items-center
+                    i(class="fa-solid fa-boxes-stacked fs-6")
                     a(href=`${prefixAdmin}/products`) Sản phẩm
+
+        .last-trash.align-items-start.flex-column.mb-1
+            ul.list-group
+                li.d-flex.align-items-center
+                    i(class="fa-solid fa-trash fs-6 text-danger")
+                    a(href=`${prefixAdmin}/products/trash` class="text-danger") Thùng rác

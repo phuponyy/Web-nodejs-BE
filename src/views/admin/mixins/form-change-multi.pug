@@ -4,17 +4,20 @@ mixin form-change-multi(path)
         method="POST"
         form-change-multi
     )
-        .d-flex.align-items-start 
-            .form-group 
-                select(name="type" class="form-control")
-                    option(value="active") Hoạt động
-                    option(value="inactive") Dừng hoạt động
-            .form-group
-                input(
-                    type="text"
-                    name="ids"
-                    value=""
-                    class="form-control d-none"
-                )
-            button(type="submit" class="btn btn-primary") Áp dụng
+        .d-flex.align-items-start.align-items-center.justify-content-between
+            .form-group.d-flex.align-items-start.align-items-center
+                .form-group 
+                    select(name="type" class="form-control")
+                        option(value="active") Hoạt động
+                        option(value="inactive") Dừng hoạt động
+                .form-group
+                    input(
+                        type="text"
+                        name="ids"
+                        value=""
+                        class="form-control d-none"
+                    )
+                button(type="submit" class="btn btn-primary ms-2") Áp dụng
+            .d-flex.justify-content-end
+                | Tổng sản phẩm: #{countProduct}
         hr
