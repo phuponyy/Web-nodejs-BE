@@ -2,6 +2,8 @@ const Product = require("../../models/product.model");
 const fillterStatusHelper = require("../../helpers/fillterStatus");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
+const systemConfig = require("../../config/system");
+
 // NOTE: [GET] /admin/products
 module.exports.index = async (req, res) => {
   const fillterStatus = fillterStatusHelper(req.query);
@@ -43,6 +45,7 @@ module.exports.index = async (req, res) => {
   //End: Pagination
 
   const products = await Product.find(find)
+    .sort({ position: -1 })
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip);
 
@@ -64,22 +67,42 @@ module.exports.changeStatus = async (req, res) => {
 
   await Product.updateOne({ _id: id }, { status: status });
 
+  req.flash("success", "Cập nhật trạng thái thành công!");
+
   res.redirect("back");
 };
 
-// NOTE: [PATCH] /admin/change-status/:status/:id
+// NOTE: [PATCH] /admin/products/change-multi/:status/:id
 module.exports.changeMulti = async (req, res) => {
   const type = req.body.type;
-  const ids = req.body.ids.split(", ");
+  const ids = req.body.ids.split(", ").map((id) => id.trim());
 
   switch (type) {
     case "active":
-      await Product.updateMany({ _id: ids }, { status: "active" });
+      await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
       break;
     case "inactive":
-      await Product.updateMany({ _id: ids }, { status: "inactive" });
+      await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
       break;
-
+    case "delete-all":
+      await Product.updateMany(
+        { _id: { $in: ids } },
+        { deleted: true, deletedAt: new Date() }
+      );
+      break;
+    case "restore-all":
+      await Product.updateMany(
+        { _id: { $in: ids } },
+        { deleted: false, restoredAt: new Date() }
+      );
+      break;
+    case "change-position":
+      for (const item of ids) {
+        let [id, position] = item.split("-");
+        position = parseInt(position);
+        await Product.updateOne({ _id: id }, { position: position });
+      }
+      break;
     default:
       break;
   }
@@ -90,7 +113,10 @@ module.exports.changeMulti = async (req, res) => {
 module.exports.deleteItem = async (req, res) => {
   const id = req.params.id;
 
-  await Product.updateOne({ _id: id }, { deleted: true });
+  await Product.updateOne(
+    { _id: id },
+    { deleted: true, deletedAt: new Date() }
+  );
 
   res.redirect("back");
 };
@@ -136,6 +162,7 @@ module.exports.trashPage = async (req, res) => {
   //End: Pagination
 
   const products = await Product.find(find)
+    .sort({ position: 1 })
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip);
 
@@ -152,9 +179,12 @@ module.exports.trashPage = async (req, res) => {
 
 //NOTE: [PATCH] /admin/products/trash/restore/id
 module.exports.restoreItem = async (req, res) => {
+  const { type, ids } = req.body;
   const id = req.params.id;
-
-  await Product.updateOne({ _id: id }, { deleted: false });
+  await Product.updateOne(
+    { _id: id },
+    { deleted: false, restoredAt: new Date() }
+  );
 
   res.redirect("back");
 };
@@ -166,4 +196,32 @@ module.exports.deletefItem = async (req, res) => {
   await Product.deleteOne({ _id: id });
 
   res.redirect("back");
+};
+
+//NOTE: [GET] /admin/products/create
+module.exports.create = async (req, res) => {
+  res.render("admin/pages/products/create.pug", {
+    pageTitle: "Thêm mới sản phẩm",
+  });
+};
+
+//NOTE: [POST] /admin/products/create
+module.exports.createPost = async (req, res) => {
+  console.log(req.file);
+  req.body.price = parseInt(req.body.price);
+  req.body.discountPercentage = parseInt(req.body.discountPercentage);
+  req.body.stock = parseInt(req.body.stock);
+
+  if (req.body.position == "") {
+    const countProduct = await Product.countDocuments();
+    req.body.position = countProduct + 1;
+  } else {
+    req.body.postion = parseInt(req.body.position);
+  }
+
+  req.body.thumbnail = `/uploads/${req.file.filename}`;
+
+  const product = new Product(req.body);
+  await product.save();
+  res.redirect(`${systemConfig.prefixAdmin}/products`);
 };

@@ -105,14 +105,42 @@ if (formChangeMulti) {
     const inputsChecked = checkboxMulti.querySelectorAll(
       "input[name='id']:checked"
     );
+    const typeChange = e.target.elements.type.value;
+    const currentPath = window.location.pathname;
+    if (typeChange == "delete-all" || typeChange == "restore-all") {
+      const message = currentPath.includes("admin/products/trash")
+        ? "Bạn có chắc muốn khôi phục lại sản phẩm này không?"
+        : "Bạn có chắc muốn xoá những sản phẩm này không?";
+      const isConfirm = confirm(message);
+      if (!isConfirm) {
+        return;
+      }
+    }
+
     if (inputsChecked.length > 0) {
       let ids = [];
       const inputIds = formChangeMulti.querySelector("input[name=ids]");
 
       inputsChecked.forEach((input) => {
         const id = input.value;
-        ids.push(id);
+        if (typeChange == "change-position") {
+          const position = input
+            .closest("tr")
+            .querySelector("input[name=position]").value;
+
+          ids.push(`${id}-${position}`);
+        } else {
+          ids.push(id);
+        }
       });
+
+      if (typeChange == "restore-all") {
+        // Chỉ lấy các id đã được chọn (đã check)
+        inputsChecked.forEach((input) => {
+          ids.push(input.value);
+        });
+      }
+
       inputIds.value = ids.join(", ");
 
       formChangeMulti.submit();
@@ -122,3 +150,23 @@ if (formChangeMulti) {
   });
 }
 //END: Form Change Multi
+
+//NOTE: show alert
+const showAlert = document.querySelector("[show-alert]");
+if (showAlert) {
+  const time = parseInt(showAlert.getAttribute("data-time"), 10) || 3000;
+  const closeAlert = showAlert.querySelector("[close-alert]");
+  setTimeout(() => {
+    showAlert.classList.add("alert-hidden");
+
+    // Set display: none after the animation (0.5s)
+    setTimeout(() => {
+      showAlert.style.display = "none";
+    }, 500); // Match the animation duration (500ms)
+  }, time);
+
+  closeAlert.addEventListener("click", () => {
+    showAlert.classList.add("alert-hidden");
+  });
+}
+//END: end show alert

@@ -1,4 +1,4 @@
-mixin form-change-multi(path)
+mixin form-change-multi(path, textDeleteAll, valueName)
     form(
         action=path
         method="POST"
@@ -8,8 +8,11 @@ mixin form-change-multi(path)
             .form-group.d-flex.align-items-start.align-items-center
                 .form-group 
                     select(name="type" class="form-control")
+                        option(disabled selected) -- Chọn hành động --
                         option(value="active") Hoạt động
                         option(value="inactive") Dừng hoạt động
+                        option(value="change-position") Thay đổi vị trí
+                        option(value=valueName) #{textDeleteAll}
                 .form-group
                     input(
                         type="text"
@@ -18,6 +21,12 @@ mixin form-change-multi(path)
                         class="form-control d-none"
                     )
                 button(type="submit" class="btn btn-primary ms-2") Áp dụng
-            .d-flex.justify-content-end
-                | Tổng sản phẩm: #{countProduct}
+            .d-flex.justify-content-end.align-items-center
+                .div
+                    | Tổng sản phẩm: #{countProduct}
+                .div.ms-2
+                    a(
+                        href=`${prefixAdmin}/products/create`
+                        class="btn btn-outline-success"
+                        ) + Thêm mới
         hr

@@ -20,7 +20,7 @@ block main
     .card.mb-3
         .card-header Danh sách
             .card-body
-                +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+                +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`, "Khôi phục tất cả", "restore-all")
 
                 if products.length > 0
                     table(
@@ -35,6 +35,7 @@ block main
                                 th Hình ảnh
                                 th Tiêu đề
                                 th Giá
+                                th Vị trí
                                 th Trạng thái
                                 th Hành động
 
@@ -57,6 +58,14 @@ block main
                                         )
                                     td #{item.title}
                                     td #{item.price}$
+                                    td
+                                        input(
+                                            type="number"
+                                            value=item.position
+                                            style="width: 60px"
+                                            min="1"
+                                            name="position"
+                                        )
                                     td
                                         if(item.status == "active")
                                             a(
@@ -95,6 +104,7 @@ block main
                                 th Hình ảnh
                                 th Tiêu đề
                                 th Giá
+                                th Vị trí
                                 th Trạng thái
                                 th Hành động
                     h1.text-danger.text-center Không tìm thấy sản phẩm nào!

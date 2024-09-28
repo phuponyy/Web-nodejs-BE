@@ -1,16 +1,31 @@
 mixin header()
     header.header 
         .container 
-            .row.align-items-center 
-                .col-3 
-                    .inner-logo 
-                        a(href="/")
-                            img(src="/images/PN.png" alt="logo")
-
-                .col-9
-                    .inner-menu
-                        ul
-                            li 
-                                a(href="/") Trang Chủ
-                            li
-                                a(href="/products") Sản phẩm
+            .d-flex.justify-content-between.align-items-center
+                .inner-menu
+                    ul.d-flex
+                        li 
+                            a(href="/") Trang Chủ
+                        li
+                            a(href="/products") Sản phẩm
+                        li
+                            a(href="/products") Giới thiệu
+                        li
+                            a(href="/products") Bài viết
+                .inner-logo 
+                    a(href="/")
+                        img(src="/images/PN.png" alt="logo")
+                .inner-menu
+                    ul.d-flex
+                        li 
+                            i(class="fa-solid fa-magnifying-glass")
+                            a(href="/") Search
+                        li
+                            i(class="fa-solid fa-user")
+                            a(href="/products") Tài khoản
+                        li
+                            i(class="fa-regular fa-heart")
+                            a(href="/products") Wishlist           
+                        li
+                            i(class="fa-solid fa-bag-shopping")
+                            a(href="/products") Cart

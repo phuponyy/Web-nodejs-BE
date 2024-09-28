@@ -23,8 +23,41 @@
     flex-wrap: wrap;
 }
 
+.header .inner-menu>ul>li>a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+}
+
 .header .inner-menu>ul>li {
     margin-left: 20px;
+}
+
+.inner-menu i {
+    padding-right: 10px;
+}
+
+.header .inner-menu>ul>li>a {
+    position: relative;
+    text-decoration: none;
+    color: #333;
+    overflow: hidden;
+}
+
+.header .inner-menu>ul>li>a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: #333;
+    bottom: -3px;
+    left: 0;
+    transition: width 0.3s ease-in-out, right 0.3s ease-in-out;
+}
+
+.header .inner-menu>ul>li>a:hover::after {
+    width: 100%;
+    left: 0;
 }
 
 /* End Header */
@@ -105,3 +138,129 @@
 }
 
 /* End product-item */
+
+/* Index */
+/* Set height of carousel to 60% of the viewport height */
+.carousel-inner img {
+    height: 60vh;
+    /* Đặt chiều cao cho ảnh */
+    object-fit: cover;
+    /* Giữ tỉ lệ ảnh mà không bị méo */
+}
+
+/* Style for the prev and next buttons to make them black */
+span.block {
+    background-color: #333;
+    /* Màu nền cho nút */
+    width: 50px;
+    /* Độ rộng của nút */
+    height: 50px;
+    /* Chiều cao của nút */
+    border-radius: 60%;
+    /* Bo tròn nút */
+}
+
+/* Đặt hiệu ứng mờ cho các phần tử carousel */
+.carousel-item {
+    opacity: 0;
+    /* Đặt độ mờ ban đầu cho ảnh là 0 */
+    transition: opacity 1s ease-in-out;
+    /* Thêm hiệu ứng chuyển tiếp */
+}
+
+.carousel-item.active {
+    opacity: 1;
+    /* Khi phần tử đang hoạt động, đặt độ mờ là 1 */
+}
+
+/* Đảm bảo rằng carousel có chiều cao cố định */
+.carousel {
+    height: 60vh;
+    /* Đặt chiều cao cho carousel */
+}
+
+
+/* Effect text  */
+.marquee-container {
+    overflow: hidden;
+    /* Ẩn nội dung vượt ra ngoài */
+    white-space: nowrap;
+    /* Ngăn không cho xuống dòng */
+    background-color: #f8f9fa;
+    /* Màu nền cho container */
+    position: relative;
+    /* Để định vị các phần tử con */
+    padding: 15px 0;
+}
+
+.marquee h4 {
+    display: inline-block;
+    /* Để nội dung chạy theo chiều ngang */
+    animation: marquee 20s linear infinite;
+    /* Thời gian chạy và kiểu chuyển động */
+    font-weight: bold;
+    /* Làm chữ đậm */
+    font-size: 2rem;
+    /* Kích thước chữ (có thể thay đổi theo ý thích) */
+    font-weight: 300;
+}
+
+.marquee span {
+    padding: 0 20px;
+    /* Khoảng cách giữa các câu */
+    font-weight: normal;
+    /* Làm cho dấu - không đậm */
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0%);
+        /* Bắt đầu từ bên phải */
+    }
+
+    100% {
+        transform: translateX(-50%);
+        /* Kết thúc ở giữa */
+    }
+}
+
+
+/* END index */
+
+/* alert success */
+[show-alert] {
+    position: fixed;
+    top: 70px;
+    right: 15px;
+    z-index: 9999;
+}
+
+[show-alert].alert-hidden {
+    opacity: 0;
+    transform: translateX(100%);
+    visibility: hidden;
+}
+
+@keyframes alert-hidden {
+    from {
+        right: 15px;
+    }
+
+    to {
+        right: -100%;
+        display: none;
+    }
+}
+
+[show-alert] [close-alert] {
+    background: #ffffffc4;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* END alert success */

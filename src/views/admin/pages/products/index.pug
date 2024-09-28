@@ -5,8 +5,15 @@ include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
 
 block main 
-    h1 #{pageTitle}
+    - if (messages.success)
+        .message.info
+        div(
+            class="alert alert-primary"
+            show-alert
+            data-time="3000"
+        ) #{messages.success} <span close-alert>x</span>
 
+    h1 #{pageTitle}
     .card.mb-3
         .card-header Bộ lọc và tìm kiếm
             .card-body
@@ -20,7 +27,7 @@ block main
     .card.mb-3
         .card-header Danh sách
             .card-body
-                +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+                +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`, "Xoá tất cả", "delete-all")
 
                 if products.length > 0
                     table(
@@ -35,6 +42,7 @@ block main
                                 th Hình ảnh
                                 th Tiêu đề
                                 th Giá
+                                th Vị trí
                                 th Trạng thái
                                 th Hành động
 
@@ -57,6 +65,14 @@ block main
                                         )
                                     td #{item.title}
                                     td #{item.price}$
+                                    td
+                                        input(
+                                            type="number"
+                                            value=item.position
+                                            style="width: 60px"
+                                            min="1"
+                                            name="position"
+                                        )
                                     td
                                         if(item.status == "active")
                                             a(
@@ -89,6 +105,7 @@ block main
                                 th Hình ảnh
                                 th Tiêu đề
                                 th Giá
+                                th Vị trí
                                 th Trạng thái
                                 th Hành động
                     h1.text-danger.text-center Không tìm thấy sản phẩm nào!
