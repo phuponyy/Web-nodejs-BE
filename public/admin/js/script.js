@@ -170,3 +170,34 @@ if (showAlert) {
   });
 }
 //END: end show alert
+
+//NOTE: Upload Image
+const uploadImage = document.querySelector("[upload-image]");
+if (uploadImage) {
+  const uploadImageInput = document.querySelector("[upload-image-input]");
+  const uploadImagePreview = document.querySelector("[upload-image-preview]");
+  const uploadImageClear = document.querySelector("[upload-image-clear]");
+  const clearImagePrivew = document.querySelector("[clear-image-preview]");
+
+  uploadImageInput.addEventListener("change", (e) => {
+    console.log(e);
+    const file = e.target.files[0];
+    if (file) {
+      uploadImagePreview.src = URL.createObjectURL(file);
+      uploadImageClear.classList.remove("d-none"); // hiển thị button X
+      clearImagePrivew.classList.remove("d-none");
+    } else {
+      uploadImageClear.classList.add("d-none"); // ẩn button X
+      clearImagePrivew.classList.add("d-none");
+    }
+  });
+
+  uploadImageClear.addEventListener("click", () => {
+    uploadImageInput.value = "";
+    uploadImagePreview.src = "";
+    uploadImageClear.classList.add("d-none"); // ẩn button X
+    clearImagePrivew.classList.add("d-none");
+  });
+}
+
+//END: Upload Image

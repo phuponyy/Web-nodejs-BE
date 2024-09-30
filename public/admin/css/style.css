@@ -94,3 +94,30 @@
 }
 
 /* End Sider */
+
+/* Image Preview */
+.image-preview {
+    width: 150px;
+    height: 150px;
+    margin-top: 15px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+/* END Image Preview */
+
+/* Button Clear */
+button.btn.btn-danger.upload-image-clear {
+    position: absolute;
+    left: 126px;
+    bottom: 270px;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+/* END Button Clear */

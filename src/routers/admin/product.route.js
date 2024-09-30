@@ -28,4 +28,6 @@ router.post(
   productController.createPost
 );
 
+router.get("/detail/:id", productController.detail);
+
 module.exports = router;

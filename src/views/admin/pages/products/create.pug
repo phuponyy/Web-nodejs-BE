@@ -47,7 +47,7 @@ block main
                 value="0"
                 min="0"
             )
-        div(class="form-group")
+        div(class="form-group mb-2")
             label(for="stock") Số lượng
             input(
                 type="number"
@@ -57,7 +57,10 @@ block main
                 value="0"
                 min="0"
             )
-        div(class="form-group")
+        div(
+            class="form-group row align-items-center"
+            upload-image
+        )
             label(for="thumbnail" class="me-2") Ảnh:
             input(
                 type="file"
@@ -65,7 +68,17 @@ block main
                 id="thumbnail"
                 name="thumbnail"
                 accept="image/*"
+                upload-image-input
             )
+            div(clear-image-preview class="d-none")
+                img(
+                    src=""
+                    upload-image-preview
+                    class="image-preview"
+                    )
+                button(class="btn btn-danger upload-image-clear d-none" upload-image-clear)
+                    i(class="fas fa-times")
+
         div(class="form-group")
             label(for="position") Vị trí
             input(
