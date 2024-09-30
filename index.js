@@ -19,9 +19,9 @@ const routeAdmin = require("./src/routers/admin/index.route");
 database.connect();
 
 // NOTE: Config
-app.set("views", path.join(__dirname, "src/views"));
+app.set("views", path.join(`${__dirname}/src/views`));
 app.set("view engine", "pug");
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(`${__dirname}/public`)));
 
 // Flash
 app.use(cookieParser("0934815205"));
