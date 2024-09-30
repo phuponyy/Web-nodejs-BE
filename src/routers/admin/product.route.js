@@ -29,6 +29,6 @@ router.post(
   productController.createPost
 );
 
-router.get("/detail/:id", productController.detail);
+router.get("/detail/:id", uploadCloud.upload, productController.detail);
 
 module.exports = router;

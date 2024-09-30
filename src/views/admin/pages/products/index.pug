@@ -3,6 +3,7 @@ include ../../mixins/fillter-status.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
+include ../../mixins/sort.pug
 
 block main 
     - if (messages.success)
@@ -24,7 +25,8 @@ block main
                         .input-group.w-50
                             +search(keyword)
 
-    .card.mb-3
+        +sort
+
         .card-header Danh sách
             .card-body
                 +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`, "Xoá tất cả", "delete-all")
