@@ -28,11 +28,11 @@ block main
         div(class="mb-4") Vị trí: <b>#{product.position}</b>
 
     if(product.description)
-        div(class="mb-4") mô tả:  <b>#{product.description}</b>
+        div(class="mb-4") mô tả:  <b>!{product.description}</b>
 
     a(
         href=`${prefixAdmin}/products/edit/${product.id}`
         class="btn btn-primary"
-    )
+    ) Chỉnh sửa
 
     script(src="/admin/js/script.js")
