@@ -24,9 +24,16 @@ app.set("view engine", "pug");
 app.use(express.static(path.join(`${__dirname}/public`)));
 
 // Flash
-app.use(cookieParser("0934815205"));
-app.use(session({ cookie: { maxAge: 60000 } }));
-app.use(flash());
+app.use(cookieParser("0934815205")); // Secret for signing cookies
+app.use(
+  session({
+    secret: "0934815205", // Add a secret key here
+    resave: false, // Do not save session if it is unmodified
+    saveUninitialized: true, // Save uninitialized sessions
+    cookie: { maxAge: 60000 }, // Expire after 1 minute
+  })
+);
+app.use(flash()); // Initialize flash after session
 // End Flash
 
 //Plugin: method-override
