@@ -1,16 +1,16 @@
-extends ../../layout/default.pug
+extends ../../layout/default
 
 block main
-    h1(class="mb-4") Thêm mới sản phẩm
+    h1(class="mb-4") Thêm danh mục sản phẩm
 
     form(
-        action=`${prefixAdmin}/products/create`
+        action=`${prefixAdmin}/products-category/create`
         id="form-create-product"
         method="POST"
         enctype="multipart/form-data"
     )
         div(class="form-group")
-            label(for="title") Tiêu đề
+            label(for="parent_id") Tiêu đề
             input(
                 type="text"
                 class="form-control"
@@ -19,42 +19,20 @@ block main
                 required
             )
         div(class="form-group")
+            label(for="parent_id") Danh mục cha
+            input(
+                type="text"
+                class="form-control"
+                id="parent_id"
+                name="parent_id"
+            )
+        div(class="form-group")
             label(for="description") Mô tả
             textarea(
                 type="text"
                 class="form-control textarea-mce"
                 id="des"
                 name="description"
-            )
-        div(class="form-group")
-            label(for="price") Giá
-            input(
-                type="number"
-                class="form-control"
-                id="price"
-                name="price"
-                value="0"
-                min="0"
-            )
-        div(class="form-group")
-            label(for="quantity") % Giảm giá
-            input(
-                type="number"
-                class="form-control"
-                id="discount"
-                name="discountPercentage"
-                value="0"
-                min="0"
-            )
-        div(class="form-group mb-2")
-            label(for="stock") Số lượng
-            input(
-                type="number"
-                class="form-control"
-                id="stock"
-                name="stock"
-                value="0"
-                min="0"
             )
         div(
             class="form-group row align-items-center"
@@ -112,5 +90,3 @@ block main
                 type="submit"
                 class="btn btn-primary"
             ) Tạo mới
-
-    script(src="/admin/js/script.js") 
