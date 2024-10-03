@@ -118,6 +118,16 @@ module.exports.changeMulti = async (req, res) => {
   res.redirect("back");
 };
 
+//NOTE: [GET] /admin/products/edit/id
+module.exports.editProduct = async (req, res) => {
+  const id = req.params.id;
+  const product = await Product.findOne({ _id: id }).lean();
+  res.render("admin/pages/products/edit", {
+    pageTitle: "Chi tiết sản phâm",
+    product: product,
+  });
+};
+
 //NOTE: [PATCH] /admin/products/delete/id
 module.exports.deleteItem = async (req, res) => {
   const id = req.params.id;

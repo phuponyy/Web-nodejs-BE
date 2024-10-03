@@ -1,11 +1,11 @@
 extends ../../layout/default
 include ../../mixins/select-tree.pug
 
-block main
-    h1(class="mb-4") Thêm danh mục sản phẩm
+block main 
+    h1(class="mb-4") #{pageTitle}
 
     form(
-        action=`${prefixAdmin}/products-category/create`
+        action=`${prefixAdmin}/products-category/edit/${data.id}?_method=PATCH`
         id="form-create-product"
         method="POST"
         enctype="multipart/form-data"
@@ -17,6 +17,7 @@ block main
                 class="form-control"
                 id="title"
                 name="title"
+                value=data.title
                 required
             )
         div(class="form-group")
@@ -28,7 +29,7 @@ block main
             )
                 option(value="") -- Chọn Danh mục --
                 if(records)
-                    +select-tree(records)
+                    +select-tree(records, 1, data.parent_id)
 
         div(class="form-group")
             label(for="description") Mô tả
@@ -37,7 +38,7 @@ block main
                 class="form-control textarea-mce"
                 id="des"
                 name="description"
-            )
+            ) #{data.description}
         div(
             class="form-group row align-items-center"
             upload-image
@@ -51,13 +52,19 @@ block main
                 accept="image/*"
                 upload-image-input
             )
-            div(clear-image-preview class="d-none")
+            div(
+                class=`clear-image-preview ${data.thumbnail ? '' : 'd-none'}`
+                clear-image-preview 
+                )
                 img(
-                    src=""
+                    src=data.thumbnail
                     upload-image-preview
                     class="image-preview"
                     )
-                button(class="btn btn-danger upload-image-clear d-none" upload-image-clear)
+                button(
+                    class=`btn btn-danger upload-image-clear ${data.thumbnail ? '' : 'd-none'}`
+                    upload-image-clear
+                    )
                     i(class="fas fa-times")
 
         div(class="form-group")
@@ -69,6 +76,7 @@ block main
                 name="position"
                 placeholder="Tự động tăng"
                 min="1"
+                value=data.position
             )
         div(class="form-group formp-check form-check-inline")
             input(
@@ -77,7 +85,7 @@ block main
                 id="statusActive"
                 name="status"
                 value="active"
-                checked
+                checked=(data.status == 'active' ? true : false)
             )
             label(for="statusActive" class="form-check-label") Hoạt động
         div(class="form-group form-check form-check-inline")
@@ -87,10 +95,11 @@ block main
                 id="statusInactive"
                 name="status"
                 value="inactive"
+                checked=(data.status == 'inactive' ? true : false)
             )
             label(for="statusActive" class="form-check-label") Dừng hoạt động
         div(class="form-group")
             button(
                 type="submit"
                 class="btn btn-primary"
-            ) Tạo mới
+            ) Cập nhật

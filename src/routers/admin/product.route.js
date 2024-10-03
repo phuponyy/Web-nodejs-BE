@@ -12,6 +12,8 @@ router.patch("/change-status/:status/:id", productController.changeStatus);
 
 router.patch("/change-multi", productController.changeMulti);
 
+router.get("/edit/:id", productController.editProduct);
+
 router.patch("/delete/:id", productController.deleteItem);
 
 router.get("/trash", productController.trashPage);
