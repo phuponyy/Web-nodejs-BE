@@ -172,33 +172,49 @@ if (showAlert) {
 //END: end show alert
 
 //NOTE: Upload Image
-const uploadImage = document.querySelector("[upload-image]");
-if (uploadImage) {
-  const uploadImageInput = document.querySelector("[upload-image-input]");
-  const uploadImagePreview = document.querySelector("[upload-image-preview]");
-  const uploadImageClear = document.querySelector("[upload-image-clear]");
-  const clearImagePrivew = document.querySelector("[clear-image-preview]");
+document.addEventListener("DOMContentLoaded", () => {
+  const uploadImage = document.querySelector("[upload-image]");
+  if (uploadImage) {
+    const uploadImageInput = document.querySelector("[upload-image-input]");
+    const uploadImagePreview = document.querySelector("[upload-image-preview]");
+    const uploadImageClear = document.querySelector("[upload-image-clear]");
+    const clearImagePreview = document.querySelector("[clear-image-preview]");
 
-  uploadImageInput.addEventListener("change", (e) => {
-    console.log(e);
-    const file = e.target.files[0];
-    if (file) {
-      uploadImagePreview.src = URL.createObjectURL(file);
-      uploadImageClear.classList.remove("d-none"); // hiển thị button X
-      clearImagePrivew.classList.remove("d-none");
-    } else {
-      uploadImageClear.classList.add("d-none"); // ẩn button X
-      clearImagePrivew.classList.add("d-none");
-    }
-  });
+    // Function to toggle visibility based on image source
+    const toggleImageVisibility = () => {
+      if (uploadImagePreview.src !== window.location.origin + "/") {
+        uploadImageClear.classList.remove("d-none");
+        clearImagePreview.classList.remove("d-none");
+      } else {
+        uploadImageClear.classList.add("d-none");
+        clearImagePreview.classList.add("d-none");
+      }
+    };
 
-  uploadImageClear.addEventListener("click", () => {
-    uploadImageInput.value = "";
-    uploadImagePreview.src = "";
-    uploadImageClear.classList.add("d-none"); // ẩn button X
-    clearImagePrivew.classList.add("d-none");
-  });
-}
+    // Initial check if image is already loaded (e.g., from the server)
+    toggleImageVisibility();
+
+    // Handle image preview when a new file is selected
+    uploadImageInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        uploadImagePreview.src = URL.createObjectURL(file); // Show selected file
+        toggleImageVisibility();
+      } else {
+        uploadImagePreview.src = ""; // Clear preview
+        toggleImageVisibility();
+      }
+    });
+
+    // Handle clear image functionality
+    uploadImageClear.addEventListener("click", (e) => {
+      e.preventDefault(); // Prevent form submission
+      clearImagePreview.classList.add("d-none");
+      uploadImageInput.value = ""; // Clear file input
+      uploadImagePreview.src = ""; // Remove image preview
+    });
+  }
+});
 
 //END: Upload Image
 

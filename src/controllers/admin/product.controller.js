@@ -120,12 +120,16 @@ module.exports.changeMulti = async (req, res) => {
 
 //NOTE: [GET] /admin/products/edit/id
 module.exports.editProduct = async (req, res) => {
-  const id = req.params.id;
-  const product = await Product.findOne({ _id: id }).lean();
-  res.render("admin/pages/products/edit", {
-    pageTitle: "Chi tiết sản phâm",
-    product: product,
-  });
+  try {
+    const id = req.params.id;
+    const product = await Product.findOne({ _id: id, deleted: false });
+    res.render("admin/pages/products/edit", {
+      pageTitle: "Chi tiết sản phâm",
+      product: product,
+    });
+  } catch (error) {
+    res.redirect(`${systemConfig.prefixAdmin}/products`);
+  }
 };
 
 //NOTE: [PATCH] /admin/products/delete/id
@@ -263,4 +267,12 @@ module.exports.detail = async (req, res) => {
   } catch (error) {
     res.redirect(`${systemConfig.prefixAdmin}/products`);
   }
+};
+
+module.exports.editPatch = async (req, res) => {
+  const id = req.params.id;
+  req.body.position = parseInt(req.body.position);
+  await Product.updateOne({ _id: id }, req.body);
+
+  res.redirect(`${systemConfig.prefixAdmin}/products`);
 };
