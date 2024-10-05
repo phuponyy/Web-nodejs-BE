@@ -1,0 +1,15 @@
+extends ../../layout/default
+
+block main 
+    h1(class="mb-4") #{pageTitle}
+
+    if(product.title)
+        div(class="mb-4") Tên: <b>#{product.title}</b>
+
+    if(product.description)
+        div(class="mb-4") Mô tả: <b>#{product.description}</b>
+
+    a(
+        href=`${prefixAdmin}/roles/edit/${product.id}`
+        class="btn btn-primary"
+    ) Chỉnh sửa
