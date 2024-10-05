@@ -96,3 +96,19 @@ module.exports.deleteItem = async (req, res) => {
   await Role.deleteOne({ _id: id });
   res.redirect("back");
 };
+
+//NOTE: [PATCH] /admin/roles/permissions
+module.exports.permissionsPatch = async (req, res) => {
+  const permissions = JSON.parse(req.body.permissions);
+  console.log(permissions);
+  for (const item of permissions) {
+    await Role.updateOne(
+      { _id: item.id },
+      {
+        permissions: item.permissions,
+      }
+    );
+  }
+
+  res.redirect("back");
+};

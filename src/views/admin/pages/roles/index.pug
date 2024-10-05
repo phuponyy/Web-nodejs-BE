@@ -28,7 +28,7 @@ block main
                         each item, index in records
                             tr 
                                 td #{index + 1}
-                                td #{item.title}
+                                td(class="text-item") #{item.title}
                                 td #{item.description}
                                 td
                                     a(
