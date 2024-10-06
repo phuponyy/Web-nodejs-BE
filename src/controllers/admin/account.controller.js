@@ -79,11 +79,22 @@ module.exports.edit = async (req, res) => {
 //NOTE: [PATCH] /admin/account/edit/:id
 module.exports.editPatch = async (req, res) => {
   const id = req.params.id;
-  if (req.body.password) {
-    req.body.password = md5(req.body.password);
+
+  const emailExit = await Account.findOne({
+    _id: { $ne: id },
+    email: req.body.email,
+    deleted: false,
+  });
+
+  if (emailExit) {
+    console.log("error", `Email ${req.body.email} đã tồn tại!`);
   } else {
-    delete req.body.password;
+    if (req.body.password) {
+      req.body.password = md5(req.body.password);
+    } else {
+      delete req.body.password;
+    }
+    await Account.updateOne({ _id: id }, req.body);
   }
-  await Account.updateOne({ _id: id }, req.body);
   res.redirect("back");
 };

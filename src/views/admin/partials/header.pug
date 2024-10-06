@@ -5,3 +5,10 @@ mixin header()
                 .col-3
                     .inner-logo
                         a(href="/admin/dashboard") ADMIN
+
+                .col-9
+                    div(class="text-end")
+                        a(
+                            href=`${prefixAdmin}/auth/logout`
+                            class="btn btn-outline-danger me-2"
+                        ) Đăng xuất

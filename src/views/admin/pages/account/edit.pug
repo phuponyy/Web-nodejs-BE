@@ -59,11 +59,22 @@ block main
                     accept="image/*"
                     upload-image-input
                 )
-                img(
-                    src=data.avatar
-                    class="image-preview"
-                    upload-image-preview
+                div(
+                    class=`clear-image-preview ${data.avatar ? '' : 'd-none'}`
+                    clear-image-preview
                 )
+                    img(
+                        src=data.avatar
+                        class="image-preview"
+                        upload-image-preview
+                    )
+                    button(
+                        type="button"
+                        class=`btn btn-danger upload-image-clear ${data.avatar ? '' : 'd-none'}`
+                        upload-image-clear
+                    )
+                        i(class="fas fa-times")
+
             div(class="form-group")
                 label(for="role_id") Phân quyền
                 select(name="role_id" id="role_id" class="form-control")
