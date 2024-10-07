@@ -24,9 +24,10 @@ mixin form-change-multi(path, textDeleteAll, valueName)
             .d-flex.justify-content-end.align-items-center
                 .div
                     | Tổng sản phẩm: #{countProduct}
-                .div.ms-2
-                    a(
-                        href=`${prefixAdmin}/products/create`
-                        class="btn btn-outline-success"
-                        ) + Thêm mới
+                if(role.permissions.includes("products_create"))
+                    .div.ms-2
+                        a(
+                            href=`${prefixAdmin}/products/create`
+                            class="btn btn-outline-success"
+                            ) + Thêm mới
         hr

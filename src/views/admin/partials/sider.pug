@@ -5,23 +5,30 @@ mixin sider()
                 li.d-flex.align-items-center
                     i(class="fa-solid fa-house-chimney fs-6")
                     a(href=`${prefixAdmin}/dashboard`) Tổng quan
-                li.d-flex.align-items-center
-                    i(class="fa-solid fa-box fs-6")
-                    a(href=`${prefixAdmin}/products`) Sản phẩm
-                li.d-flex.align-items-center
-                    i(class="fa-solid fa-boxes-stacked fs-6")
-                    a(href=`${prefixAdmin}/products-category`) Danh mục sản phẩm
-                li.d-flex.align-items-center
-                    i(class="fa-solid fa-users-gear")
-                    a(href=`${prefixAdmin}/roles`) Nhóm quyền
-                li.d-flex.align-items-center
-                    i(class="fa-solid fa-user-astronaut")
-                    a(href=`${prefixAdmin}/roles/permissions`) Phân quyền
-                li.d-flex.align-items-center
-                    i(class="fa-solid fa-user-astronaut")
-                    a(href=`${prefixAdmin}/accounts`) Danh sách tài khoản
-        .last-trash.align-items-start.flex-column.mb-1
-            ul.list-group
-                li.d-flex.align-items-center
-                    i(class="fa-solid fa-trash fs-6 text-danger")
-                    a(href=`${prefixAdmin}/products/trash` class="text-danger") Thùng rác
+                if(role.permissions.includes("products_view"))
+                    li.d-flex.align-items-center
+                        i(class="fa-solid fa-box fs-6")
+                        a(href=`${prefixAdmin}/products`) Sản phẩm
+                if(role.permissions.includes("products-category_view"))
+                    li.d-flex.align-items-center
+                        i(class="fa-solid fa-boxes-stacked fs-6")
+                        a(href=`${prefixAdmin}/products-category`) Danh mục sản phẩm
+                if(role.permissions.includes("roles_view"))
+                    li.d-flex.align-items-center
+                        i(class="fa-solid fa-users-gear")
+                        a(href=`${prefixAdmin}/roles`) Nhóm quyền
+                if(role.permissions.includes("roles_permissions"))
+                    li.d-flex.align-items-center
+                        i(class="fa-solid fa-user-astronaut")
+                        a(href=`${prefixAdmin}/roles/permissions`) Phân quyền
+                if(role.permissions.includes("accoutns_view"))
+                    li.d-flex.align-items-center
+                        i(class="fa-solid fa-user-astronaut")
+                        a(href=`${prefixAdmin}/accounts`) Danh sách tài khoản
+
+        if(role.permissions.includes("products-trash_view"))
+            .last-trash.align-items-start.flex-column.mb-1
+                ul.list-group
+                    li.d-flex.align-items-center
+                        i(class="fa-solid fa-trash fs-6 text-danger")
+                        a(href=`${prefixAdmin}/products/trash` class="text-danger") Thùng rác

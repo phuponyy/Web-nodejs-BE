@@ -1,69 +1,75 @@
 extends ../../layout/default
 
 block main
-    h1(class="mb-4") #{pageTitle}
+    if(role.permissions.includes("accoutns_view"))
+        h1(class="mb-4") #{pageTitle}
 
-    .card.mb-3
-        .card-header Danh sách
-        .card-body
-            .row
-                .col-8 
-                .col-4.text-end
-                    a(
-                        href=`${prefixAdmin}/accounts/create`
-                        class="btn btn-outline-success"
-                    ) + Thêm mới
+        .card.mb-3
+            .card-header Danh sách
+            .card-body
+                .row
+                    .col-8 
+                    .col-4.text-end
+                        if(role.permissions.includes("accounts_create"))
+                            a(
+                                href=`${prefixAdmin}/accounts/create`
+                                class="btn btn-outline-success"
+                            ) + Thêm mới
 
-            table(
-                class="table table-hover table-sm"
-            )
-                thead
-                    tr
-                        th STT
-                        td Ảnh đại diện
-                        th Họ tên
-                        th Phân quyền
-                        th Email
-                        th Trạng thái
-                        th Hành động
-
-                tbody
-                    each item, index in records
+                table(
+                    class="table table-hover table-sm"
+                )
+                    thead
                         tr
-                            td #{index + 1}
-                            td
-                                img(
-                                    src=item.avatar
-                                    alt=item.fullName
-                                    width="100px"
-                                    height="auto"
-                                )
-                            td #{item.fullName}
-                            td #{item.role.title}
-                            td #{item.email}
-                            td
-                                if(item.status == "active")
+                            th STT
+                            td Ảnh đại diện
+                            th Họ tên
+                            th Phân quyền
+                            th Email
+                            th Trạng thái
+                            th Hành động
+
+                    tbody
+                        each item, index in records
+                            tr
+                                td #{index + 1}
+                                td
+                                    img(
+                                        src=item.avatar
+                                        alt=item.fullName
+                                        width="100px"
+                                        height="auto"
+                                    )
+                                td #{item.fullName}
+                                td #{item.role.title}
+                                td #{item.email}
+                                td
+                                    if(item.status == "active")
+                                        a(
+                                            href="javascript:;"
+                                            class="badge rounded-pill text-bg-success"
+                                            data-status="active"
+                                        ) Hoạt động
+                                    else
+                                        a(
+                                            href="javascript:;"
+                                            class="badge rounded-pill text-bg-danger"
+                                            data-status="inactive"
+                                        ) Dừng hoạt động
+                                td
                                     a(
-                                        href="javascript:;"
-                                        class="badge rounded-pill text-bg-success"
-                                        data-status="active"
-                                    ) Hoạt động
-                                else
-                                    a(
-                                        href="javascript:;"
-                                        class="badge rounded-pill text-bg-danger"
-                                        data-status="inactive"
-                                    ) Dừng hoạt động
-                            td
-                                a(
-                                    href=`${prefixAdmin}/accounts/detail/${item.id}`
-                                    class="btn btn-primary btn-sm"
-                                ) Chi tiết
-                                a(
-                                    href=`${prefixAdmin}/accounts/edit/${item.id}`
-                                    class="btn btn-warning btn-sm ms-2"
-                                ) Sửa
-                                a(
-                                    href=`${prefixAdmin}/accounts/delete/${item.id}`
-                                    class="btn btn-danger btn-sm ms-2"
-                                ) Xoá
+                                        href=`${prefixAdmin}/accounts/detail/${item.id}`
+                                        class="btn btn-primary btn-sm"
+                                    ) Chi tiết
+                                    if(role.permissions.includes("accounts_edit"))
+                                        a(
+                                            href=`${prefixAdmin}/accounts/edit/${item.id}`
+                                            class="btn btn-warning btn-sm ms-2"
+                                        ) Sửa
+                                    if(role.permissions.includes("accounts_delete"))
+                                        a(
+                                            href=`${prefixAdmin}/accounts/delete/${item.id}`
+                                            class="btn btn-danger btn-sm ms-2"
+                                        ) Xoá
+    else
+        h1 Bạn không có quyền truy cập vào trang này!

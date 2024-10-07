@@ -4,10 +4,17 @@ const Account = require("../../models/account.model");
 const systemConfig = require("../../config/system");
 
 //NOTE: [GET] /admin/auth/login
-module.exports.login = (req, res) => {
-  res.render("admin/pages/auth/login", {
-    pageTitle: "Đăng nhập",
-  });
+module.exports.login = async (req, res) => {
+  const user = await Account.findOne({ token: req.cookies.token }).select(
+    "-password"
+  );
+  if (!user) {
+    res.render("admin/pages/auth/login", {
+      pageTitle: "Đăng nhập",
+    });
+  } else {
+    res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
+  }
 };
 
 //NOTE: [POST] /admin/auth/login
