@@ -7,6 +7,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const flash = require("express-flash");
+const moment = require("moment");
 
 require("dotenv").config();
 
@@ -50,6 +51,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // NOTE: App Locals Variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
+app.locals.moment = moment;
 
 // NOTE: Port
 const port = process.env.PORT;

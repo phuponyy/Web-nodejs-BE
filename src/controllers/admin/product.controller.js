@@ -5,6 +5,7 @@ const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
 const systemConfig = require("../../config/system");
 const createTreeHelper = require("../../helpers/createTree");
+const Account = require("../../models/account.model");
 
 // NOTE: [GET] /admin/products
 module.exports.index = async (req, res) => {
@@ -60,6 +61,24 @@ module.exports.index = async (req, res) => {
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip);
 
+  for (const product of products) {
+    const user = await Account.findOne({
+      _id: product.createdBy.account_id,
+    });
+    if (user) {
+      product.accountFullName = user.fullName;
+    }
+
+    const updatedBy = product.updatedBy.slice(-1)[0];
+    if (updatedBy) {
+      const userUpdated = await Account.findOne({
+        _id: updatedBy.account_id,
+      });
+
+      updatedBy.accountFullName = userUpdated.fullName;
+    }
+  }
+
   res.render("admin/pages/products", {
     pageTitle: "Danh sách sản phẩm",
     nameTitle,
@@ -76,7 +95,15 @@ module.exports.changeStatus = async (req, res) => {
   const status = req.params.status;
   const id = req.params.id;
 
-  await Product.updateOne({ _id: id }, { status: status });
+  const updated = {
+    account_id: res.locals.user.id,
+    updateAt: new Date(),
+  };
+
+  await Product.updateOne(
+    { _id: id },
+    { status: status, $push: { updatedBy: updated } }
+  );
 
   req.flash("success", "Cập nhật trạng thái thành công!");
 
@@ -88,12 +115,23 @@ module.exports.changeMulti = async (req, res) => {
   const type = req.body.type;
   const ids = req.body.ids.split(", ").map((id) => id.trim());
 
+  const updated = {
+    account_id: res.locals.user.id,
+    updateAt: new Date(),
+  };
+
   switch (type) {
     case "active":
-      await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
+      await Product.updateMany(
+        { _id: { $in: ids } },
+        { status: "active", $push: { updatedBy: updated } }
+      );
       break;
     case "inactive":
-      await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+      await Product.updateMany(
+        { _id: { $in: ids } },
+        { status: "inactive", $push: { updatedBy: updated } }
+      );
       break;
     case "delete-all":
       await Product.updateMany(
@@ -104,14 +142,21 @@ module.exports.changeMulti = async (req, res) => {
     case "restore-all":
       await Product.updateMany(
         { _id: { $in: ids } },
-        { deleted: false, restoredAt: new Date() }
+        {
+          deleted: false,
+          restoredAt: new Date(),
+          $push: { updatedBy: updated },
+        }
       );
       break;
     case "change-position":
       for (const item of ids) {
         let [id, position] = item.split("-");
         position = parseInt(position);
-        await Product.updateOne({ _id: id }, { position: position });
+        await Product.updateOne(
+          { _id: id },
+          { position: position, $push: { updatedBy: updated } }
+        );
       }
       break;
     default:
@@ -191,7 +236,7 @@ module.exports.trashPage = async (req, res) => {
   //End: Pagination
 
   const products = await Product.find(find)
-    .sort({ position: 1 })
+    .sort({ position: -1 })
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip);
 
@@ -229,8 +274,6 @@ module.exports.deletefItem = async (req, res) => {
 
 //NOTE: [GET] /admin/products/create
 module.exports.create = async (req, res) => {
-  let find = { deleted: false };
-
   const category = await ProductCategory.find({ deleted: false });
 
   const newCategory = createTreeHelper.tree(category);
@@ -246,13 +289,16 @@ module.exports.createPost = async (req, res) => {
   req.body.price = parseInt(req.body.price);
   req.body.discountPercentage = parseInt(req.body.discountPercentage);
   req.body.stock = parseInt(req.body.stock);
-
   if (req.body.position == "") {
     const countProduct = await Product.countDocuments();
     req.body.position = countProduct + 1;
   } else {
     req.body.postion = parseInt(req.body.position);
   }
+
+  req.body.createdBy = {
+    account_id: res.locals.user.id,
+  };
 
   const product = new Product(req.body);
   await product.save();
@@ -283,8 +329,25 @@ module.exports.detail = async (req, res) => {
 
 module.exports.editPatch = async (req, res) => {
   const id = req.params.id;
-  req.body.position = parseInt(req.body.position);
-  await Product.updateOne({ _id: id }, req.body);
+  try {
+    const updated = {
+      account_id: res.locals.user.id,
+      updateAt: new Date(),
+    };
 
-  res.redirect(`${systemConfig.prefixAdmin}/products`);
+    req.body.position = parseInt(req.body.position);
+    await Product.updateOne(
+      { _id: id },
+      {
+        ...req.body,
+        $push: {
+          updatedBy: updated,
+        },
+      }
+    );
+
+    res.redirect(`${systemConfig.prefixAdmin}/products`);
+  } catch (error) {
+    console.log("error", "Co loi xay ra vui long thu lai");
+  }
 };
