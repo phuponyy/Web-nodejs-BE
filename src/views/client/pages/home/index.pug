@@ -1,6 +1,8 @@
 extends ../../layout/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/product-layout.pug
 
-block main 
+block main
     #carouselExampleCaptions.carousel.slide
         .carousel-indicators
             button.active(type='button' data-bs-target='#carouselExampleCaptions' data-bs-slide-to='0' aria-current='true' aria-label='Slide 1')
@@ -38,3 +40,10 @@ block main
                 span - 
                 | Giảm giá cuối mùa phiên bản 2024
     hr
+
+    .section-products-featured.my-5
+        .container
+            .row
+                .col-12
+                    +box-head("Sản Phẩm Nổi Bật")
+            +product-grid(productsFeautured)

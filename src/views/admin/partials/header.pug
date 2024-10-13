@@ -9,6 +9,10 @@ mixin header()
                 .col-9
                     div(class="text-end")
                         a(
+                            href=`${prefixAdmin}/my-account`
+                            class="btn btn-primary"
+                        ) #{user.fullName}
+                        a(
                             href=`${prefixAdmin}/auth/logout`
-                            class="btn btn-danger me-2"
+                            class="btn btn-danger ms-2"
                         ) Đăng xuất

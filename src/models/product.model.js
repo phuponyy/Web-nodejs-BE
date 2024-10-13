@@ -44,6 +44,7 @@ const productSchema = new mongoose.Schema(
     deletedAt: Date,
     restoredAt: Date,
     status: String,
+    featured: String,
     updatedBy: [
       {
         account_id: String,

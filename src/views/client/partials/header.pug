@@ -1,3 +1,5 @@
+include ../mixins/sub-menu.pug
+
 mixin header()
     header.header 
         .container 
@@ -6,12 +8,27 @@ mixin header()
                     ul.d-flex
                         li 
                             a(href="/") Trang Chủ
-                        li
-                            a(href="/products") Sản phẩm
-                        li
-                            a(href="/products") Giới thiệu
-                        li
-                            a(href="/products") Bài viết
+                        li(class="sub-menu")
+                            -const pathProduct = "/products";
+                            a(href=pathProduct) Sản phẩm
+                                +sub-menu(layoutProductsCategory, pathProduct)
+                                //- ul
+                                //-     li
+                                //-         a(href="/products/slug-1") Mục 1
+                                //-         ul
+                                //-             li
+                                //-                 a(href="/products/slug-1-1") Mục 1 - 1
+                                //-             li
+                                //-                 a(href="/products/slug-1-2") Mục 1 - 2
+                                //-                 ul
+                                //-                     li
+                                //-                         a(href="/products/slug-1-2-1") Mục 1 - 2 - 1
+                                //-                     li
+                                //-                         a(href="/products/slug-1-2-2") Mục 1 - 2 - 2
+                                //-     li
+                                //-         a(href="/products/slug-2") Mục 2
+                        li 
+                            a(href="/about") Giới thiêu
                 .inner-logo 
                     a(href="/")
                         img(src="/images/PN.png" alt="logo")
