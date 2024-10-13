@@ -34,9 +34,23 @@ mixin header()
                         img(src="/images/PN.png" alt="logo")
                 .inner-menu
                     ul.d-flex
-                        li 
-                            i(class="fa-solid fa-magnifying-glass")
-                            a(href="/") Search
+                        li
+                            form(
+                                action="/search"
+                                method="GET"
+                            )
+                                div(class="form-group d-flex mb-0")
+                                    input(
+                                        type="text"
+                                        placeholder="Nhập từ khoá..."
+                                        class="form-control"
+                                        name="keyword"
+                                        value=keyword
+                                    )
+                                    button(
+                                        type="submit"
+                                        class="btn btn-primary"
+                                    ) Tìm
                         li
                             i(class="fa-solid fa-user")
                             a(href="/products") Tài khoản
