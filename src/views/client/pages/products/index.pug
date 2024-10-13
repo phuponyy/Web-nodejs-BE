@@ -6,9 +6,6 @@ block main
     .container.my-3 
         .row 
             .col-12
-                +box-head("Danh Sách Sản Phẩm")
+                +box-head(pageTitle)
 
         +product-grid(products)
-    //- ul
-    //- each item, index in products
-    //- li #{index+1} #{item.title} - #{item.price}$

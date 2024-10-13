@@ -12,8 +12,18 @@ module.exports.index = async (req, res) => {
 
   const newProduct = productHelper.priceNewProducts(productsFeautured);
 
+  const productNew = await Product.find({
+    deleted: false,
+    status: "active",
+  })
+    .sort({ position: "desc" })
+    .limit(6);
+
+  const newProductNew = productHelper.priceNewProducts(productNew);
+
   res.render("client/pages/home/", {
     pageTitle: "Trang Chủ",
     productsFeautured: newProduct,
+    productNew: newProductNew,
   });
 };
