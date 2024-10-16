@@ -8,55 +8,63 @@ mixin header()
                     ul.d-flex
                         li 
                             a(href="/") Trang Chủ
-                        li(class="sub-menu")
-                            -const pathProduct = "/products";
+                        li.sub-menu
+                            - const pathProduct = "/products";
                             a(href=pathProduct) Sản phẩm
                                 +sub-menu(layoutProductsCategory, pathProduct)
-                                //- ul
-                                //-     li
-                                //-         a(href="/products/slug-1") Mục 1
-                                //-         ul
-                                //-             li
-                                //-                 a(href="/products/slug-1-1") Mục 1 - 1
-                                //-             li
-                                //-                 a(href="/products/slug-1-2") Mục 1 - 2
-                                //-                 ul
-                                //-                     li
-                                //-                         a(href="/products/slug-1-2-1") Mục 1 - 2 - 1
-                                //-                     li
-                                //-                         a(href="/products/slug-1-2-2") Mục 1 - 2 - 2
-                                //-     li
-                                //-         a(href="/products/slug-2") Mục 2
                         li 
-                            a(href="/about") Giới thiêu
+                            a(href="/about") Giới thiệu
                 .inner-logo 
                     a(href="/")
                         img(src="/images/PN.png" alt="logo")
                 .inner-menu
                     ul.d-flex
-                        li
+                        li.d-flex.align-items-center
+                            i(
+                                class="fa-solid fa-magnifying-glass"
+                                id="searchIcon"
+                                style="cursor: pointer;"
+                                onclick="toggleSearch()"
+                            )
+
                             form(
                                 action="/search"
                                 method="GET"
+                                id="searchForm"
+                                class="search-form d-flex"
                             )
                                 div(class="form-group d-flex mb-0")
                                     input(
                                         type="text"
                                         placeholder="Nhập từ khoá..."
-                                        class="form-control"
+                                        class="form-control search-input"
                                         name="keyword"
                                         value=keyword
                                     )
                                     button(
                                         type="submit"
-                                        class="btn btn-primary"
+                                        class="btn btn-primary search-btn ml-2"
                                     ) Tìm
-                        li
+                        li.account-menu.d-flex.align-items-center
                             i(class="fa-solid fa-user")
-                            a(href="/products") Tài khoản
+                            if(user)
+                                a(href="/account") Tài khoản
+                                    ul.dropdown-menu
+                                        li
+                                            a(href="/account/logout") Đăng xuất
+                            else
+                                a(href="/account/login") Đăng nhập
+                                    ul.dropdown-menu
+                                        li
+                                            a(href="/account/login") Đăng nhập
+                                        li
+                                            a(href="/account/register") Đăng ký
+
                         li
                             i(class="fa-regular fa-heart")
                             a(href="/products") Wishlist           
                         li
                             i(class="fa-solid fa-bag-shopping")
                             a(href="/cart") Cart (#{miniCart ? miniCart.totalQuantity : 0})
+
+    script(src="/js/script.js") 

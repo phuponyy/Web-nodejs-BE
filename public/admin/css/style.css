@@ -21,6 +21,63 @@
 
 /* End Header */
 
+/* NOTE: alert success */
+.alert {
+    display: block;
+    /* Initially visible */
+}
+
+.alert-hidden {
+    display: none;
+    /* Hidden after animation */
+}
+
+
+.alert-hidden {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    opacity: 0;
+    transform: translateX(100%);
+    visibility: hidden;
+}
+
+
+[show-alert] {
+    position: fixed;
+    top: 70px;
+    right: 15px;
+    z-index: 9999;
+}
+
+[show-alert].alert-hidden {
+    opacity: 0;
+    transform: translateX(100%);
+    visibility: hidden;
+}
+
+@keyframes alert-hidden {
+    from {
+        right: 15px;
+    }
+
+    to {
+        right: -100%;
+        display: none;
+    }
+}
+
+[show-alert] [close-alert] {
+    background: #ffffffc4;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* END: alert success */
+
 /* Body */
 .body .sider {
     width: 150px;

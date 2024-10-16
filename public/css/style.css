@@ -241,6 +241,25 @@ span.block {
 /* END index */
 
 /* alert success */
+.alert {
+    display: block;
+    /* Initially visible */
+}
+
+.alert-hidden {
+    display: none;
+    /* Hidden after animation */
+}
+
+
+.alert-hidden {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    opacity: 0;
+    transform: translateX(100%);
+    visibility: hidden;
+}
+
+
 [show-alert] {
     position: fixed;
     top: 70px;
@@ -318,6 +337,12 @@ span.block {
     display: block;
 }
 
+.sub-menu ul li a {
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+}
+
 /* END: sub menu */
 
 /* NOTE: product-detail */
@@ -375,3 +400,134 @@ span.block {
 }
 
 /* END: product-detail */
+
+/* NOTE: client pages */
+/* CSS for the search input and button animation */
+.search-form {
+    max-width: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+
+.search-form.show {
+    max-width: 400px;
+    /* Adjust the width as needed */
+    opacity: 1;
+}
+
+/* Adding smooth border-radius effect */
+.search-input,
+.search-btn {
+    transition: border-radius 0.3s ease, background-color 0.3s ease;
+    border-radius: 50px;
+}
+
+.search-input:focus,
+.search-btn:hover {
+    border-radius: 10px;
+    background-color: #e9ecef;
+}
+
+/* END: client pages */
+
+/* NOTE: password hide and show  */
+input[type="password"] {
+    padding-right: 40px;
+}
+
+i.fa-eye,
+i.fa-eye-slash {
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+i.fa-eye:hover,
+i.fa-eye-slash:hover {
+    color: #007bff;
+}
+
+/* END: password hide and show  */
+
+/* NOTE: css account header */
+
+/* Container for the account menu */
+.account-menu {
+    position: relative;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.account-label {
+    margin-left: 5px;
+}
+
+/* Initially hide the dropdown menu */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 150px;
+    opacity: 0;
+    transform: translateY(-10px);
+    /* Start slightly above */
+    transition: opacity 1s ease, transform 1s ease;
+    border-radius: 5px;
+    z-index: 999;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 1s ease-in-out;
+    /* Add slide effect */
+}
+
+/* Dropdown menu item styles */
+.dropdown-menu li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.dropdown-menu li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+.dropdown-menu li:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown-menu li:last-child {
+    border-bottom: none;
+    /* Remove border from the last item */
+}
+
+/* Show dropdown on hover with slide effect */
+.account-menu:hover .dropdown-menu {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    /* Slide down */
+    max-height: 300px;
+    /* Adjust based on content size */
+}
+
+/* Animation for smooth dropdown */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* END: css account header */

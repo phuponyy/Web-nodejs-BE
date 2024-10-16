@@ -6,14 +6,17 @@ const userSchema = new mongoose.Schema(
     fullName: String,
     email: String,
     password: String,
-    token: {
+    tokenUser: {
       type: String,
       default: generate.generateRandomString(20),
+    },
+    status: {
+      type: String,
+      default: "active",
     },
     phone: String,
     avatar: String,
     role_id: String,
-    status: String,
     deleted: {
       type: Boolean,
       default: false,
