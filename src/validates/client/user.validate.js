@@ -35,3 +35,13 @@ module.exports.loginPost = (req, res, next) => {
 
   next();
 };
+
+module.exports.forgotPasswordPost = (req, res, next) => {
+  if (!req.body.email) {
+    console.log("error", "Vui là nhap email");
+    res.redirect("back");
+    return;
+  }
+
+  next();
+};
