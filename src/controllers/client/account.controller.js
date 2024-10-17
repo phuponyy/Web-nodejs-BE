@@ -3,6 +3,7 @@ const User = require("../../models/users.model");
 const generate = require("../../helpers/generate");
 const ForgotPassword = require("../../models/forgot-password.model");
 const sendMailHelper = require("../../helpers/sendMail");
+const Cart = require("../../models/cart.model");
 
 module.exports.register = (req, res) => {
   res.render("client/pages/account/register", {
@@ -61,7 +62,23 @@ module.exports.loginPost = async (req, res) => {
       return res.redirect("back");
     }
 
+    const cart = await Cart.findOne({
+      user_id: user.id,
+    });
+
+    if (cart) {
+      res.cookie("cartId", cart._id);
+    } else {
+      await Cart.updateOne(
+        { _id: req.cookies.cartId },
+        {
+          user_id: user.id,
+        }
+      );
+    }
+
     res.cookie("tokenUser", user.tokenUser);
+
     res.redirect("/");
   } catch (error) {
     console.error("Login error:", error); // Log the error for debugging
@@ -73,6 +90,7 @@ module.exports.loginPost = async (req, res) => {
 //NOTE: [POST] /account/logout
 module.exports.logout = (req, res) => {
   res.clearCookie("tokenUser");
+  res.clearCookie("cartId");
   res.redirect("/");
 };
 
@@ -179,4 +197,18 @@ module.exports.resetPasswordPost = async (req, res) => {
   );
 
   res.redirect("/");
+};
+
+//NOTE: [GET] /acount/info
+module.exports.info = async (req, res) => {
+  const tokenUser = req.cookies.tokenUser;
+
+  const infoUser = await User.findOne({
+    tokenUser: tokenUser,
+  }).select("-password");
+
+  res.render("client/pages/account/info", {
+    pageTitle: "Thông tin tài khoản",
+    infoUser: infoUser,
+  });
 };

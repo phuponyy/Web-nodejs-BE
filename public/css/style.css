@@ -531,3 +531,43 @@ i.fa-eye-slash:hover {
 }
 
 /* END: css account header */
+
+/* NOTE: infoUser css */
+/* Account info card styling */
+.card {
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Profile image styling */
+.user-info h5 {
+    font-weight: 600;
+}
+
+.user-info p {
+    margin-bottom: 0;
+    font-size: 0.95rem;
+}
+
+button {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Form styling */
+input.form-control {
+    background-color: #f8f9fa;
+    border: none;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+/* END: infoUser css */

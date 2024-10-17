@@ -1,0 +1,35 @@
+extends ../../layout/default
+include ../../mixins/box-head
+
+block main
+    .container.mt-5
+        .row.justify-content-center
+            .col-md-8
+                +box-head("Thông tin tài khoản")
+                .card.shadow.mb-4
+                    .card-body
+                        // Profile Image
+                        .d-flex.align-items-center.mb-3
+                            img(src="https://res.cloudinary.com/deca0oo5q/image/upload/v1728030230/movu0xgvsnwtc5e2o9tx.jpg" alt="User Profile" class="rounded-circle me-3" style="width: 80px; height: 80px;")
+                            .user-info
+                                h5.text-primary.mb-1= infoUser.fullName
+                                p.text-muted= infoUser.email
+                                small.text-muted.mt-2 Created at: #{new Date(infoUser.createdAt).toLocaleDateString()}
+                        // Account Details
+                        .row
+                            .col-md-6.mb-3
+                                label.form-label Tên:
+                                input.form-control(type="text", value=infoUser.fullName, readonly)
+                            .col-md-6.mb-3
+                                label.form-label Email:
+                                input.form-control(type="email", value=infoUser.email, readonly)
+                        .row
+                            .col-md-6.mb-3
+                                label.form-label Trạng thái:
+                                input.form-control(type="text", value=infoUser.status, readonly)
+                            .col-md-6.mb-3
+                                label.form-label Member Since
+                                input.form-control(type="text", value=new Date(infoUser.createdAt).toLocaleDateString(), readonly)
+                        .row
+                            .col-md-12.text-end
+                                button.btn.btn-primary Sửa
