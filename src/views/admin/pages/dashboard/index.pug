@@ -1,8 +1,102 @@
-extends ../../layout/default.pug
+extends ../../layout/default
 
-block main 
-    h1 hi
+block main
+    .container.my-4
+        h2.text-center.mb-4 Admin Dashboard
 
-    div #{user}
-    div #{role.title}
-    div #{role.permissions}
+        // User Information Section
+        .row.mb-4
+            .col-lg-4
+                .card.shadow-lg
+                    .card-body.text-center
+                        img(src= user.avatar, alt="User Avatar" class="img-fluid rounded-circle mb-3" style="max-width: 150px;")
+                        h5 #{user.fullName}
+                        p.text-muted #{user.email}
+                        p Phone: #{user.phone}
+                        p Role: #{role.title}
+                        p Status: 
+                            if user.status === "active"
+                                span.badge.bg-success Active
+                            else
+                                span.badge.bg-danger Inactive
+
+            .col-lg-8
+                .card.shadow-lg
+                    .card-body
+                        h5 Role Permissions
+                        ul.list-group#rolePermissionsList
+                            each permission, index in role.permissions
+                                li.list-group-item.align-items-center.d-flex(style=`display: ${index < 5 ? 'list-item' : 'none'}`)
+                                    i.fa.fa-check-circle.text-success.me-2
+                                    | #{permission}
+
+                        if role.permissions.length > 5
+                            button#showMoreBtn.btn.btn-primary.mt-3.w-100(type="button")
+                                | Show More
+
+        .row.mt-4
+            .col-md-12
+                .card.shadow-lg.mb-4
+                    .card-body
+                        h5.text-center Danh mục sản phẩm
+                        canvas#productCategoryChart.w-100.h-100
+                        script.
+                            const labels = !{JSON.stringify(labels)};
+                            const counts = !{JSON.stringify(counts)};
+
+        // New Charts Section for Total Accounts
+        .row.mt-4
+            .col-md-3
+                .card.shadow-lg.mb-4
+                    .card-body
+                        h5.text-center Total Accounts Admin
+                        canvas#totalAccountsChart.w-100.h-100
+
+            .col-md-3
+                .card.shadow-lg.mb-4
+                    .card-body
+                        h5.text-center Total Products
+                        canvas#totalProductsChart.w-100.h-100
+
+            .col-md-3
+                .card.shadow-lg.mb-4
+                    .card-body
+                        h5.text-center System Usage Overview
+                        canvas#systemUsageChart.w-100.h-100
+
+        // Account Details Table
+        .row.mt-4
+            .col-md-12
+                .card.shadow-lg
+                    .card-body
+                        h5.text-center Detailed Account List
+                        table.table.table-striped
+                            thead
+                                tr
+                                    th Name
+                                    th Email
+                                    th Phone
+                                    th Role
+                                    th Status
+                            tbody
+                                each account in accounts
+                                    tr
+                                        td= account.fullName
+                                        td= account.email
+                                        td= account.phone
+                                        td= account.role
+                                        td= account.status
+
+    script.
+        const totalAccounts = !{totalAccounts};
+        const activeUsers = !{activeUsers};
+        const inactiveUsers = !{inactiveUsers};
+        const totalProducts = !{totalProducts};
+        const totalMemory = !{totalMemory};
+        const freeMemory = !{freeMemory};
+        const usedMemory = !{usedMemory};
+        const cpuLoad = !{cpuLoad};
+        const uptime = !{uptime};
+
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js")
+    script(src="/admin/js/dashboard-charts.js")

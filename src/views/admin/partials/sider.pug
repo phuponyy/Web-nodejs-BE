@@ -25,6 +25,10 @@ mixin sider()
                     li.d-flex.align-items-center
                         i(class="fa-solid fa-user-astronaut")
                         a(href=`${prefixAdmin}/accounts`) Danh sách tài khoản
+                if(role.permissions.includes("accounts_setting"))
+                    li.d-flex.align-items-center
+                        i(class="fa-solid fa-gear")
+                        a(href=`${prefixAdmin}/setting/genaral`) Cài đặt
 
         if(role.permissions.includes("products-trash_view"))
             .last-trash.align-items-start.flex-column.mb-1

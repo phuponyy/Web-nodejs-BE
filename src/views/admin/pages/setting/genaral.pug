@@ -1,0 +1,59 @@
+extends ../../layout/default
+
+block main
+    if(role.permissions.includes("accounts_setting"))
+        .container.my-5
+            .row
+                .col-md-8.offset-md-2
+                    h2.text-center.mb-4 General Setting
+                    .card.shadow-lg
+                        .card-body
+                            form(action=`${prefixAdmin}/setting/genaral?_method=PATCH` method="POST" enctype="multipart/form-data")
+                                .row
+                                    .col-md-6
+                                        .form-group.mb-3
+                                            label(for="websiteName") Tên website
+                                            input#websiteName.form-control(type="text" placeholder="Nhập tên website" name="websiteName" value=settingGenaral.websiteName)
+
+                                    .col-md-6
+                                        .form-group.mb-3
+                                            div(class="form-group" upload-image)
+                                                label(for="logo") Website Logo
+                                                input#logo.form-control-file(
+                                                    type="file"
+                                                    name="logo"
+                                                    accept="image/*"
+                                                    upload-image-input
+                                                )
+                                                div(clear-image-preview class=`${settingGenaral.logo ? '' : 'd-none' }`)
+                                                    img(
+                                                        src=settingGenaral.logo
+                                                        upload-image-preview
+                                                        class="image-preview"
+                                                        )
+                                                    button(class=`btn btn-danger upload-image-clear ${settingGenaral.logo ? '' : 'd-none'}` upload-image-clear style="position: absolute; top: 85px; left: 570px;")
+                                                        i(class="fas fa-times")
+
+                                .row
+                                    .col-md-6
+                                        .form-group.mb-3
+                                            label(for="phone") Contact Phone
+                                            input#phone.form-control(type="text" placeholder="Nhập số điện thoại" name="phone" value=settingGenaral.phone)
+
+                                    .col-md-6
+                                        .form-group.mb-3
+                                            label(for="email") Contact Email
+                                            input#email.form-control(type="email" placeholder="Nhập email" name="email" value=settingGenaral.email)
+
+                                .form-group.mb-3
+                                    label(for="address") Address
+                                    input#address.form-control(type="text" placeholder="Nhập địa chỉ" name="address" value=settingGenaral.address)
+
+                                .form-group.mb-3
+                                    label(for="copyright") Copyright Information
+                                    textarea#copyright.form-control(name="copyright" rows="3" placeholder="Nhập copyright") #{settingGenaral.copyright}
+
+                                .text-center.mt-4
+                                    button.btn.btn-primary.w-100(type="submit") Cập nhật
+    else
+        h1 Bạn không có quyền truy cập vào trang này!

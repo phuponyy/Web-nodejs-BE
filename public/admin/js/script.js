@@ -255,3 +255,33 @@ if (sort) {
   });
 }
 //END: Sort
+
+document.addEventListener("DOMContentLoaded", () => {
+  const showMoreBtn = document.querySelector("#showMoreBtn");
+  const rolePermissionsList = document.getElementById("rolePermissionsList");
+  const permissions = rolePermissionsList.querySelectorAll("li");
+
+  // Show all remaining permissions when the button is clicked
+  if (showMoreBtn) {
+    showMoreBtn.addEventListener("click", () => {
+      for (let i = 5; i < permissions.length; i++) {
+        permissions[i].style.display = "list-item"; // Show each permission
+      }
+      showMoreBtn.style.display = "none"; // Hide the button after showing all
+
+      const showLessBtn = document.createElement("button");
+      showLessBtn.id = "showLessBtn";
+      showLessBtn.className = "btn btn-secondary mt-3 w-100";
+      showLessBtn.textContent = "Show Less";
+      rolePermissionsList.appendChild(showLessBtn);
+
+      showLessBtn.addEventListener("click", () => {
+        for (let i = 5; i < permissions.length; i++) {
+          permissions[i].style.display = "none"; // Hide each permission
+        }
+        showLessBtn.remove();
+        showMoreBtn.style.display = "block"; // Show the "Show More" button again
+      });
+    });
+  }
+});
