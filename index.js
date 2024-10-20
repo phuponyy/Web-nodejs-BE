@@ -30,12 +30,7 @@ app.use(
 //NOTE: Socket.io
 const server = createServer(app);
 const io = new Server(server);
-io.on("connection", (socket) => {
-  console.log("a user connected", socket.id);
-  socket.on("CLIENT_SEND_MESSAGE", (msg) => {
-    io.emit("SEVER_RETURN_MESSAGE", msg);
-  });
-});
+global._io = io;
 //END: Socket.io
 
 // NOTE: Config

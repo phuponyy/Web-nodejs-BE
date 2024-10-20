@@ -48,8 +48,10 @@ mixin header()
                         li.account-menu.d-flex.align-items-center
                             i(class="fa-solid fa-user")
                             if(user)
-                                a(href="/account/info") Tài khoản
+                                a(href="/account/info") #{user.fullName}
                                     ul.dropdown-menu
+                                        li
+                                            a(href="/chat") Chat
                                         li
                                             a(href="/account/logout") Đăng xuất
                             else

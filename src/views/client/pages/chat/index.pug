@@ -11,24 +11,31 @@ block main
             .col-12
                 .chat
                     .inner-body
-                        .inner-incoming
-                            .inner-name Em yêu
-                            .inner-content
-                                | Anh ơi sang nhà e nha 
-                        .inner-outgoing
-                            .inner-content
-                                | Thế à? Ok e iu
-                        .inner-incoming
-                            .inner-name Em yêu
-                            .inner-content
-                                | Nhanh nha Nhanh nha
-                        .inner-outgoing
-                            .inner-content
-                                | CK đến rồi
-                        .inner-incoming
-                            .inner-name Em yêu
-                            .inner-content
-                                | Thì e k có nhà
+                        each chat in chats
+                            div(class=(chat.user_id == user.id ? "inner-outgoing" : "inner-incoming"))
+                                if(chat.user_id != user.id)
+                                    .inner-name #{chat.infoUser.fullName}
+                                .inner-content
+                                    | #{chat.content}
+
+                        //- .inner-incoming
+                        //-     .inner-name Em yêu
+                        //-     .inner-content
+                        //-         | Anh ơi sang nhà e nha 
+                        //- .inner-outgoing
+                        //-     .inner-content
+                        //-         | Thế à? Ok e iu
+                        //- .inner-incoming
+                        //-     .inner-name Em yêu
+                        //-     .inner-content
+                        //-         | Nhanh nha Nhanh nha
+                        //- .inner-outgoing
+                        //-     .inner-content
+                        //-         | CK đến rồi
+                        //- .inner-incoming
+                        //-     .inner-name Em yêu
+                        //-     .inner-content
+                        //-         | Thì e k có nhà
 
                     .inner-foot
                         form(
