@@ -578,7 +578,7 @@ input.form-control {
     background-color: #f7f7f7;
     border-radius: 8px;
     padding: 20px;
-    height: 500px;
+    height: 74vh;
     /* Adjust as necessary */
     overflow-y: auto;
     box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
@@ -680,5 +680,70 @@ input.form-control {
         font-size: 12px;
     }
 }
+
+.chat .inner-body {
+    scroll-behavior: smooth;
+}
+
+.inner-form {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.inner-input {
+    width: 100%;
+    padding-right: 40px;
+    padding-left: 10px;
+    height: 40px;
+    border: 1px soild #ccc;
+    border-radius: 20px;
+}
+
+.emoji-icon {
+    position: absolute;
+    right: 70px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.emoji-icon i {
+    font-size: 20px;
+    color: #888;
+}
+
+.emoji-icon i:hover {
+    color: #555;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    margin-left: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+button i {
+    color: #555;
+}
+
+button i:hover {
+    color: #000;
+}
+
+/* Emoji Icon */
+.tooltip {
+    visibility: hidden;
+}
+
+.tooltip.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+/* -Emoji Icon */
 
 /* END: client Chat */

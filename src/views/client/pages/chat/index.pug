@@ -9,7 +9,7 @@ block main
 
         .row
             .col-12
-                .chat
+                .chat(my-id=user.id)
                     .inner-body
                         each chat in chats
                             div(class=(chat.user_id == user.id ? "inner-outgoing" : "inner-incoming"))
@@ -18,34 +18,20 @@ block main
                                 .inner-content
                                     | #{chat.content}
 
-                        //- .inner-incoming
-                        //-     .inner-name Em yêu
-                        //-     .inner-content
-                        //-         | Anh ơi sang nhà e nha 
-                        //- .inner-outgoing
-                        //-     .inner-content
-                        //-         | Thế à? Ok e iu
-                        //- .inner-incoming
-                        //-     .inner-name Em yêu
-                        //-     .inner-content
-                        //-         | Nhanh nha Nhanh nha
-                        //- .inner-outgoing
-                        //-     .inner-content
-                        //-         | CK đến rồi
-                        //- .inner-incoming
-                        //-     .inner-name Em yêu
-                        //-     .inner-content
-                        //-         | Thì e k có nhà
-
                     .inner-foot
                         form(
                             class="inner-form"
                             action=""
                         )
-                            input(
+                            input.inner-input(
                                 type="text"
                                 placeholder="Nhập tin nhắn..."
                                 name="content"
                             )
+                            .emoji-icon
+                                i.fa-solid.fa-face-smile.button-icon
                             button
                                 i.fa-solid.fa-paper-plane
+
+    div(class="tooltip" role="tooltip")
+        emoji-picker
