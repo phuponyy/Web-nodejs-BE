@@ -1,0 +1,44 @@
+extends ../../layout/default
+include ../../mixins/box-head
+
+block main
+    .container.my-3
+        .row
+            .col-12
+                +box-head("Chat")
+
+        .row
+            .col-12
+                .chat
+                    .inner-body
+                        .inner-incoming
+                            .inner-name Em yêu
+                            .inner-content
+                                | Anh ơi sang nhà e nha 
+                        .inner-outgoing
+                            .inner-content
+                                | Thế à? Ok e iu
+                        .inner-incoming
+                            .inner-name Em yêu
+                            .inner-content
+                                | Nhanh nha Nhanh nha
+                        .inner-outgoing
+                            .inner-content
+                                | CK đến rồi
+                        .inner-incoming
+                            .inner-name Em yêu
+                            .inner-content
+                                | Thì e k có nhà
+
+                    .inner-foot
+                        form(
+                            class="inner-form"
+                            action=""
+                        )
+                            input(
+                                type="text"
+                                placeholder="Nhập tin nhắn..."
+                                name="content"
+                            )
+                            button
+                                i.fa-solid.fa-paper-plane

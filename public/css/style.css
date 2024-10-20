@@ -571,3 +571,114 @@ input.form-control {
 }
 
 /* END: infoUser css */
+
+/* NOTE: client Chat */
+/* General container styling */
+.chat {
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    padding: 20px;
+    height: 500px;
+    /* Adjust as necessary */
+    overflow-y: auto;
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.inner-body {
+    flex-grow: 1;
+    margin-bottom: 20px;
+}
+
+.inner-foot {
+    display: flex;
+    align-items: center;
+}
+
+.inner-foot form {
+    display: flex;
+    width: 100%;
+}
+
+.inner-foot input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    margin-right: 10px;
+    outline: none;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.inner-foot input:focus {
+    border-color: #007bff;
+}
+
+.inner-foot button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.inner-foot button:hover {
+    background-color: #0056b3;
+}
+
+/* Incoming message styles */
+.inner-incoming {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.inner-incoming .inner-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #ff4081;
+    /* Example color for "Em yêu" */
+}
+
+.inner-incoming .inner-content {
+    background-color: #e1f7d5;
+    padding: 10px 15px;
+    border-radius: 10px 10px 10px 0px;
+    display: inline-block;
+    max-width: 80%;
+    font-size: 14px;
+}
+
+/* Outgoing message styles */
+.inner-outgoing {
+    margin-bottom: 15px;
+    text-align: right;
+}
+
+.inner-outgoing .inner-content {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 10px 10px 0px 10px;
+    display: inline-block;
+    max-width: 80%;
+    font-size: 14px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .chat {
+        height: 100%;
+        /* Full height on smaller screens */
+    }
+
+    .inner-foot input {
+        font-size: 12px;
+    }
+}
+
+/* END: client Chat */

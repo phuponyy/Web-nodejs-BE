@@ -8,7 +8,9 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const flash = require("express-flash");
 const moment = require("moment");
-
+const { createServer } = require("node:http");
+const { join } = require("node:path");
+const { Server } = require("socket.io");
 require("dotenv").config();
 
 const database = require("./src/config/database");
@@ -24,6 +26,17 @@ app.use(
   "/tinymce",
   express.static(path.join(__dirname, "node_modules", "tinymce"))
 );
+
+//NOTE: Socket.io
+const server = createServer(app);
+const io = new Server(server);
+io.on("connection", (socket) => {
+  console.log("a user connected", socket.id);
+  socket.on("CLIENT_SEND_MESSAGE", (msg) => {
+    io.emit("SEVER_RETURN_MESSAGE", msg);
+  });
+});
+//END: Socket.io
 
 // NOTE: Config
 app.set("views", path.join(`${__dirname}/src/views`));
@@ -66,6 +79,6 @@ app.get("*", (req, res) => {
   });
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Connect Success ${port}`);
 });
