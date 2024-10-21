@@ -743,7 +743,63 @@ button i:hover {
     opacity: 1;
 }
 
-
 /* -Emoji Icon */
+
+/* Typing chat */
+.typing-indicator {
+    margin-top: 10px;
+    font-size: 14px;
+    color: gray;
+    position: relative;
+}
+
+.typing-indicator.show {
+    display: flex;
+    align-items: center;
+}
+
+.typing-indicator span {
+    height: 8px;
+    width: 8px;
+    margin: 0 2px;
+    background-color: gray;
+    border-radius: 50%;
+    display: inline-block;
+    animation: bounce 1.5s infinite;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.box-typing .typing-indicator {
+    position: relative;
+    height: 30px;
+    width: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #efefef;
+    border-radius: 10px 10px 10px 0px;
+    margin-top: 2px;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+/* -Typing chat */
 
 /* END: client Chat */
