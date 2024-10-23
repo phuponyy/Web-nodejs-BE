@@ -1,37 +1,11 @@
 const Chat = require("../../models/chat.model");
 const User = require("../../models/users.model");
 
+const chatSocket = require("../../sockets/client/chat.socket");
+
 module.exports.index = async (req, res) => {
-  const userId = res.locals.user.id;
-  const fullName = res.locals.user.fullName;
-
   //NOTE: Socket.io
-  _io.once("connection", (socket) => {
-    socket.on("CLIENT_SEND_MESSAGE", async (content) => {
-      const chat = new Chat({
-        user_id: userId,
-        content: content,
-      });
-      await chat.save();
-
-      // Tả data về client
-      _io.emit("SERVER_RETURN_MESSAGE", {
-        user_id: userId,
-        fullName: fullName,
-        content: content,
-      });
-    });
-
-    // Typing Chat
-    socket.on("CLIENT_SEND_TYPING", async (type) => {
-      socket.broadcast.emit("SERVER_RETURN_TYPING", {
-        userId: userId,
-        fullName: fullName,
-        type: type,
-      });
-    });
-    // -Typing Chat
-  });
+  chatSocket(res);
   //END: Socket.io
 
   //NOTE: Lấy data từ database

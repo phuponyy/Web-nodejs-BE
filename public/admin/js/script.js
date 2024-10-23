@@ -258,11 +258,10 @@ if (sort) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const showMoreBtn = document.querySelector("#showMoreBtn");
-  const rolePermissionsList = document.getElementById("rolePermissionsList");
-  const permissions = rolePermissionsList.querySelectorAll("li");
-
   // Show all remaining permissions when the button is clicked
   if (showMoreBtn) {
+    const rolePermissionsList = document.getElementById("rolePermissionsList");
+    const permissions = rolePermissionsList.querySelectorAll("li");
     showMoreBtn.addEventListener("click", () => {
       for (let i = 5; i < permissions.length; i++) {
         permissions[i].style.display = "list-item"; // Show each permission

@@ -97,3 +97,16 @@ module.exports.editPatch = async (req, res) => {
   }
   res.redirect("back");
 };
+
+//NOTE: [PATCH] /admin/account/delete/id
+module.exports.delete = async (req, res) => {
+  const id = req.params.id;
+
+  console.log(id);
+
+  await Account.updateOne(
+    { _id: id },
+    { deleted: true, deletedAt: new Date() }
+  );
+  res.redirect("back");
+};

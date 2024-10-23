@@ -21,6 +21,8 @@ router.post(
 
 router.get("/edit/:id", productController.edit);
 
+router.get("/detail/:id", productController.detail);
+
 router.patch(
   "/edit/:id",
   upload.single("thumbnail"),

@@ -12,11 +12,6 @@ const cartSchema = new mongoose.Schema(
         quantity: Number,
       },
     ],
-    expireAt: {
-      type: Date,
-      default: Date.now(),
-      expires: 120,
-    },
   },
   {
     timestamps: true,

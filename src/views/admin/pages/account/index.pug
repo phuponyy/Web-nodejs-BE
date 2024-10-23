@@ -70,7 +70,17 @@ block main
                                     if(role.permissions.includes("accoutns_delete"))
                                         a(
                                             href=`${prefixAdmin}/accounts/delete/${item.id}`
+                                            button-delete
+                                            data-id=item.id
                                             class="btn btn-danger btn-sm ms-2"
                                         ) Xoá
+
+        form(
+            aciton=""
+            method="POST"
+            id="form-delete-status"
+            data-path=`${prefixAdmin}/accounts/delete`
+        )
+        script(src="/admin/js/account.js")
     else
         h1 Bạn không có quyền truy cập vào trang này!

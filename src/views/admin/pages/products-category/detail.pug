@@ -1,0 +1,60 @@
+extends ../../layout/default
+
+block main
+    .container.my-5
+        h1.text-center.mb-5 #{pageTitle}
+
+        .row.justify-content-center
+            .col-md-8.col-lg-6
+                // Card with hover effect
+                .card.shadow-lg.mb-5( style="transition: transform 0.3s ease-in-out;")
+                    .card-body
+                        // Product Category Title
+                        h2.text-primary.mb-3.text-center #{data.title}
+
+                        // Description section
+                        if data.description
+                            p.lead.text-muted.text-center #{data.description}
+                        else
+                            p.lead.text-muted.text-center No description available.
+
+                        // Category details
+                        ul.list-group.list-group-flush
+                            li.list-group-item
+                                strong Status: 
+                                if(data.status == 'active')
+                                    span.badge.badge-success.text-bg-success Hoạt động
+                                else
+                                    span.badge.badge-danger.text-bg-danger Dừng hoạt động
+                            li.list-group-item
+                                strong Vị trí: 
+                                span #{data.position}
+
+                            if data.parent_id
+                                li.list-group-item
+                                    strong Parent ID:
+                                    span #{data.parent_id}
+                            else
+                                li.list-group-item
+                                    strong Parent data:
+                                    span None
+
+                            li.list-group-item
+                                strong Created At:
+                                span #{new Date(data.createdAt).toLocaleDateString('en-US')}
+
+                            li.list-group-item
+                                strong Updated At:
+                                span #{new Date(data.updatedAt).toLocaleDateString('en-US')}
+
+                // Back Button
+                .text-center.mt-4
+                    a.btn.btn-primary.btn-lg(href="/categories" role="button")
+                        i.fa-solid.fa-arrow-left.mr-2
+                        | Back to Categories
+
+    // Styling & Animation for hover effect
+    style.
+        .card:hover {
+            transform: translateY(-10px);
+        }
