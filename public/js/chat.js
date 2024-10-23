@@ -1,31 +1,38 @@
 import * as Popper from "https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js";
 import { FileUploadWithPreview } from "https://unpkg.com/file-upload-with-preview/dist/index.js";
+
 // File-Upload-With-Preview
-const upload = new FileUploadWithPreview("upload-images", {
-  multiple: true,
-  maxFileCount: 6,
-});
-// -File-Upload-With-Preview
-
-//NOTE: CLIENT_SENT_MESSAGE
-const formSendData = document.querySelector(".chat .inner-form");
-if (formSendData) {
-  formSendData.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const content = e.target.elements.content.value;
-    const images = upload.cachedFileArray;
-
-    console.log(images);
-
-    if (content || images.length > 0) {
-      socket.emit("CLIENT_SEND_MESSAGE", { content: content, images: images });
-      e.target.elements.content.value = "";
-      upload.resetPreviewPanel();
-      socket.emit("CLIENT_SEND_TYPING", "hidden");
-    }
+const uploadDiv = document.querySelector("[data-upload-id]");
+if (uploadDiv) {
+  const upload = new FileUploadWithPreview("upload-images", {
+    multiple: true,
+    maxFileCount: 6,
   });
+
+  //NOTE: CLIENT_SENT_MESSAGE
+  const formSendData = document.querySelector(".chat .inner-form");
+  if (formSendData) {
+    formSendData.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const content = e.target.elements.content.value;
+      const images = upload.cachedFileArray;
+
+      console.log(images);
+
+      if (content || images.length > 0) {
+        socket.emit("CLIENT_SEND_MESSAGE", {
+          content: content,
+          images: images,
+        });
+        e.target.elements.content.value = "";
+        upload.resetPreviewPanel();
+        socket.emit("CLIENT_SEND_TYPING", "hidden");
+      }
+    });
+  }
+  //END: CLIENT_SENT_MESSAGE
 }
-//END: CLIENT_SENT_MESSAGE
+// -File-Upload-With-Preview
 
 //NOTE: SERVER_RETURN_MESSAGE
 socket.on("SERVER_RETURN_MESSAGE", (data) => {

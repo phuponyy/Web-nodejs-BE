@@ -7,6 +7,8 @@ block main
             .col-12
                 +box-head("Chat")
 
+        include ../../partials/list-btn-users.pug
+
         .row
             .col-12
                 .chat(my-id=user.id)
@@ -19,7 +21,7 @@ block main
                                     .inner-content
                                         | #{chat.content}
                                 if(chat.images)
-                                    .inner-images
+                                    .inner-images   
                                         each image in chat.images
                                             img(src=image)
                         // Typing Indicator
