@@ -13,3 +13,18 @@ if (listBtnAddFriend) {
   });
 }
 // END: Chức năng gửi yêu cầu
+
+// NOTE: Chức năng Huỷ gửi yêu cầu
+const listBtnCancelFriend = document.querySelectorAll("[btn-cancel-friend");
+if (listBtnCancelFriend) {
+  listBtnCancelFriend.forEach((button) => {
+    button.addEventListener("click", () => {
+      button.closest(".box-user").classList.remove("add");
+
+      const userId = button.getAttribute("btn-cancel-friend");
+
+      socket.emit("CLIENT_CANCEL_FRIEND", userId);
+    });
+  });
+}
+// END: Chức năng Huỷ gửi yêu cầu
